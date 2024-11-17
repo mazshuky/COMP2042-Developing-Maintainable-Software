@@ -23,10 +23,6 @@ public class Controller implements PropertyChangeListener {
 		this.stage = stage;
 	}
 
-
-	// extract exception handling via encapsulation
-	// launchGame method can be simplified by extracting goToLevel call into a method that handles initial setup
-
 	/**
 	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
@@ -35,9 +31,6 @@ public class Controller implements PropertyChangeListener {
 	}
 	*/
 
-	// extract logic for creating an instance of LevelParent into a separate method
-	// extract logic for setting the scene into a separate method
-	// remove unnecessary addition and immediate removal of PropertyChangeListener
 	/** private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Class<?> myClass = Class.forName(className);
