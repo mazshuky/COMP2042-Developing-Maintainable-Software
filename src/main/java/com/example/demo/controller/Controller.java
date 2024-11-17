@@ -24,26 +24,27 @@ public class Controller implements PropertyChangeListener {
 	}
 
 	/**
-	public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
-		stage.show();
-		goToLevel(LEVEL_ONE_CLASS_NAME);
-	}
-	*/
+	 public void launchGame() throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+	 InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  {
+	 stage.show();
+	 goToLevel(LEVEL_ONE_CLASS_NAME);
+	 }
+	 */
 
-	/** private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Class<?> myClass = Class.forName(className);
-		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-		LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
-
-		// Add this controller as a PropertyChangeListener
-		myLevel.addPropertyChangeListener(this);
-		myLevel.removePropertyChangeListener(this);
-		Scene scene = myLevel.initializeScene();
-		stage.setScene(scene);
-		myLevel.startGame();
-	}
+	/**
+	 * private void goToLevel(String className) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
+	 * InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	 * Class<?> myClass = Class.forName(className);
+	 * Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
+	 * LevelParent myLevel = (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+	 * <p>
+	 * // Add this controller as a PropertyChangeListener
+	 * myLevel.addPropertyChangeListener(this);
+	 * myLevel.removePropertyChangeListener(this);
+	 * Scene scene = myLevel.initializeScene();
+	 * stage.setScene(scene);
+	 * myLevel.startGame();
+	 * }
 	 */
 
 	public void launchGame(Stage stage) throws CustomException {
@@ -84,11 +85,11 @@ public class Controller implements PropertyChangeListener {
 		if ("levelChange".equals(event.getPropertyName())) {
 			try {
 				goToLevel((String) event.getNewValue());
-			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-					 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			} catch (CustomException e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setContentText(e.getClass().toString());
 				alert.show();
 			}
 		}
 	}
+}
