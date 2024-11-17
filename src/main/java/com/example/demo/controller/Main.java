@@ -18,9 +18,8 @@ public class Main extends Application {
 			stage.setHeight(SCREEN_HEIGHT);
 			stage.setWidth(SCREEN_WIDTH);
 			myController = new Controller(stage);
-			myController.launchGame();
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | java.lang.reflect.InvocationTargetException e) {
+			myController.launchGame(stage);
+		} catch (SecurityException | IllegalArgumentException e) {
 			throw new CustomException("Error launching game", e);
 		}
 	}
