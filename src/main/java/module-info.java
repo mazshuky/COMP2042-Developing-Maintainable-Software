@@ -1,4 +1,5 @@
 module com.example.demo {
+    requires java.desktop;
     requires javafx.controls;
     requires javafx.fxml;
 
