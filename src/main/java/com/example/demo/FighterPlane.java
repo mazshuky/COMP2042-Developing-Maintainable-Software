@@ -10,11 +10,11 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	}
 
 	public abstract ActiveActorDestructible fireProjectile();
-	
+
 	@Override
 	public void takeDamage() {
 		health--;
-		if (healthAtZero()) {
+		if (health == 0) {
 			this.destroy();
 		}
 	}
@@ -25,10 +25,6 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 
 	protected double getProjectileYPosition(double yPositionOffset) {
 		return getLayoutY() + getTranslateY() + yPositionOffset;
-	}
-
-	private boolean healthAtZero() {
-		return health == 0;
 	}
 
 	public int getHealth() {
