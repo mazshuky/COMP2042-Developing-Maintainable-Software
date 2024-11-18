@@ -1,16 +1,9 @@
 package com.example.demo;
 
 public class LevelOne extends LevelParent {
-	
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
-	private static final String NEXT_LEVEL = "com.example.demo.LevelTwo";
-	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 10;
-	private static final double ENEMY_SPAWN_PROBABILITY = .20;
-	private static final int PLAYER_INITIAL_HEALTH = 5;
 
 	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		super(GameConstants.BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH);
 	}
 
 	@Override
@@ -19,7 +12,7 @@ public class LevelOne extends LevelParent {
 			loseGame();
 		}
 		else if (userHasReachedKillTarget())
-			goToNextLevel(NEXT_LEVEL);
+			goToNextLevel(GameConstants.NEXT_LEVEL);
 	}
 
 	@Override
@@ -30,7 +23,7 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-		int enemiesToSpawn = TOTAL_ENEMIES - currentNumberOfEnemies;
+		int enemiesToSpawn = GameConstants.TOTAL_ENEMIES - currentNumberOfEnemies;
 		for (int i = 0; i < enemiesToSpawn; i++) {
 			if (shouldSpawnEnemy()) {
 				double initialYPosition = generateRandomYPosition();
@@ -41,7 +34,7 @@ public class LevelOne extends LevelParent {
 	}
 
 	private boolean shouldSpawnEnemy() {
-		return Math.random() < ENEMY_SPAWN_PROBABILITY;
+		return Math.random() < GameConstants.ENEMY_SPAWN_PROBABILITY;
 	}
 
 	private double generateRandomYPosition() {
@@ -50,11 +43,10 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected LevelView instantiateLevelView() {
-		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
+		return new LevelView(getRoot(), GameConstants.PLAYER_INITIAL_HEALTH);
 	}
 
 	private boolean userHasReachedKillTarget() {
-		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+		return getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE;
 	}
-
 }
