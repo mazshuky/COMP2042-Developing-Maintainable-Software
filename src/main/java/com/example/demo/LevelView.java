@@ -49,7 +49,7 @@ public class LevelView {
 	/**
 	 * Removes hearts from the heart display based on remaining hearts
 	 *
-	 * @param heartsRemaining
+	 * @param heartsRemaining   the number of hearts remaining to be displayed
 	 */
 	public void removeHearts(int heartsRemaining) {
 		heartsRemaining = Math.max(heartsRemaining, 0); // Ensure non-negative
