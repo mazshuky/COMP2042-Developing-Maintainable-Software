@@ -52,10 +52,18 @@ public class LevelView {
 	 * @param heartsRemaining
 	 */
 	public void removeHearts(int heartsRemaining) {
+		heartsRemaining = Math.max(heartsRemaining, 0); // Ensure non-negative
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
 			heartDisplay.removeHeart();
 		}
 	}
+
+	/* public void removeHearts(int heartsRemaining) {
+		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
+		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
+			heartDisplay.removeHeart();
+		}
+	}*/
 
 }
