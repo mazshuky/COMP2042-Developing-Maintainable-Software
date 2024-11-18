@@ -44,24 +44,8 @@ public class HeartDisplay {
 	}
 
 	/**
-	private void initializeHearts() {
-		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
-			// Get the resource and check for null
-			URL resource = getClass().getResource(HEART_IMAGE_NAME);
-			if (resource != null) {
-				Image heartImage = new Image(resource.toExternalForm());
-				ImageView heart = new ImageView(heartImage);
-
-				heart.setFitHeight(HEART_HEIGHT);
-				heart.setPreserveRatio(true);
-				container.getChildren().add(heart);
-			} else {
-				// Throw an exception if the heart image is not found
-				throw new IllegalArgumentException("Heart image not found: " + HEART_IMAGE_NAME);
-			}
-		}
-	}*/
-
+	 * Initializes the hearts to display
+	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
 			ImageView heart = createHeartImageView();
@@ -73,6 +57,11 @@ public class HeartDisplay {
 		}
 	}
 
+	/**
+	 * Creates an ImageView for the heart image
+	 *
+	 * @return   the ImageView for the heart image or null if image is not found
+	 */
 	private ImageView createHeartImageView() {
 		URL resource = getClass().getResource(HEART_IMAGE_NAME);
 		if (resource != null) {
