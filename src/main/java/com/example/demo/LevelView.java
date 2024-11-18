@@ -5,12 +5,12 @@ import javafx.scene.Group;
 // Class representing the view of the game level
 public class LevelView {
 	
-	private static final double HEART_DISPLAY_X_POSITION = 5;
-	private static final double HEART_DISPLAY_Y_POSITION = 25;
-	private static final int WIN_IMAGE_X_POSITION = 355;
-	private static final int WIN_IMAGE_Y_POSITION = 175;
-	private static final int LOSS_SCREEN_X_POSITION = -160;
-	private static final int LOSS_SCREEN_Y_POSITION = -375;
+	public static final double HEART_DISPLAY_X_POSITION = GameConstants.HEART_DISPLAY_X_POSITION;
+	public static final double HEART_DISPLAY_Y_POSITION = GameConstants.HEART_DISPLAY_Y_POSITION;
+	public static final int WIN_IMAGE_X_POSITION = GameConstants.WIN_IMAGE_X_POSITION;
+	public static final int WIN_IMAGE_Y_POSITION = GameConstants.WIN_IMAGE_Y_POSITION;
+	public static final int LOSS_SCREEN_X_POSITION = GameConstants.LOSS_SCREEN_X_POSITION;
+	public static final int LOSS_SCREEN_Y_POSITION = GameConstants.LOSS_SCREEN_Y_POSITION;
 
 	private final Group root;
 	private final WinImage winImage;
