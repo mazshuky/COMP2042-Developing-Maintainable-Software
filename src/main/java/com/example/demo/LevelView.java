@@ -59,11 +59,4 @@ public class LevelView {
 		}
 	}
 
-	/* public void removeHearts(int heartsRemaining) {
-		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
-		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
-			heartDisplay.removeHeart();
-		}
-	}*/
-
 }
