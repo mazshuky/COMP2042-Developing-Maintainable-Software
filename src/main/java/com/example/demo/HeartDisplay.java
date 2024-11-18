@@ -43,6 +43,7 @@ public class HeartDisplay {
 		container.setLayoutY(containerYPosition);
 	}
 
+	/**
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
 			// Get the resource and check for null
@@ -59,6 +60,29 @@ public class HeartDisplay {
 				throw new IllegalArgumentException("Heart image not found: " + HEART_IMAGE_NAME);
 			}
 		}
+	}*/
+
+	private void initializeHearts() {
+		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
+			ImageView heart = createHeartImageView();
+			if (heart != null) {
+				container.getChildren().add(heart);
+			} else {
+				throw new IllegalArgumentException("Heart image not found: " + HEART_IMAGE_NAME);
+			}
+		}
+	}
+
+	private ImageView createHeartImageView() {
+		URL resource = getClass().getResource(HEART_IMAGE_NAME);
+		if (resource != null) {
+			Image heartImage = new Image(resource.toExternalForm());
+			ImageView heart = new ImageView(heartImage);
+			heart.setFitHeight(HEART_HEIGHT);
+			heart.setPreserveRatio(true);
+			return heart;
+		}
+		return null;
 	}
 
 	/**
