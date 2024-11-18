@@ -30,6 +30,27 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected void spawnEnemyUnits() {
 		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
+		int enemiesToSpawn = TOTAL_ENEMIES - currentNumberOfEnemies;
+		for (int i = 0; i < enemiesToSpawn; i++) {
+			if (shouldSpawnEnemy()) {
+				double initialYPosition = generateRandomYPosition();
+				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), initialYPosition);
+				addEnemyUnit(newEnemy);
+			}
+		}
+	}
+
+	private boolean shouldSpawnEnemy() {
+		return Math.random() < ENEMY_SPAWN_PROBABILITY;
+	}
+
+	private double generateRandomYPosition() {
+		return Math.random() * getEnemyMaximumYPosition();
+	}
+
+	/**
+	protected void spawnEnemyUnits() {
+		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
 		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
 			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
 				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
@@ -38,6 +59,7 @@ public class LevelOne extends LevelParent {
 			}
 		}
 	}
+	 */
 
 	@Override
 	protected LevelView instantiateLevelView() {
