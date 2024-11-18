@@ -18,8 +18,6 @@ import javafx.util.Duration;
 
 public abstract class LevelParent {
 
-	// private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
-	// private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
@@ -35,7 +33,6 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
-	// private int currentNumberOfEnemies;
 	private final LevelView levelView;
 	private final PropertyChangeSupport support; // For notifying observers
 	private final SimpleIntegerProperty currentNumberOfEnemies;
@@ -90,21 +87,6 @@ public abstract class LevelParent {
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		support.removePropertyChangeListener(listener);
 	}
-
-	/*private void updateScene() {
-		spawnEnemyUnits();
-		updateActors();
-		generateEnemyFire();
-		updateNumberOfEnemies();
-		handleEnemyPenetration();
-		handleUserProjectileCollisions();
-		handleEnemyProjectileCollisions();
-		handlePlaneCollisions();
-		removeAllDestroyedActors();
-		updateKillCount();
-		updateLevelView();
-		checkIfGameOver();
-	}*/
 
 	private void updateScene() {
 		spawnEnemyUnits();
@@ -201,15 +183,6 @@ public abstract class LevelParent {
 			}
 		}
 	}
-
-	/*private void handleEnemyPenetration() {
-		for (ActiveActorDestructible enemy : enemyUnits) {
-			if (enemyHasPenetratedDefenses(enemy)) {
-				user.takeDamage();
-				enemy.destroy();
-			}
-		}
-	}*/
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
