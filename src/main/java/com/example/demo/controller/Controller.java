@@ -2,17 +2,14 @@ package com.example.demo.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-// import java.lang.reflect.Constructor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-// import javafx.scene.Scene;
 import com.example.demo.LevelParent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-// import com.example.demo.LevelParent;
 
 public class Controller implements PropertyChangeListener {
 
