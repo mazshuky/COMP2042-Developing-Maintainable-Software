@@ -7,6 +7,7 @@ import java.util.List;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,8 +18,8 @@ import javafx.util.Duration;
 
 public abstract class LevelParent {
 
-	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
-	private static final int MILLISECOND_DELAY = 50;
+	// private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
+	// private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
@@ -34,10 +35,10 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> userProjectiles;
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
-	private int currentNumberOfEnemies;
+	// private int currentNumberOfEnemies;
 	private final LevelView levelView;
-
 	private final PropertyChangeSupport support; // For notifying observers
+	private final SimpleIntegerProperty currentNumberOfEnemies;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
@@ -52,9 +53,9 @@ public abstract class LevelParent {
 		this.background = new ImageView();
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
-		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
+		this.enemyMaximumYPosition = screenHeight - GameConstants.SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
-		this.currentNumberOfEnemies = 0;
+		this.currentNumberOfEnemies = new SimpleIntegerProperty(0);
 		this.support = new PropertyChangeSupport(this);
 
 		initializeBackground(backgroundImageName);
@@ -83,7 +84,6 @@ public abstract class LevelParent {
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-
 		support.addPropertyChangeListener(listener);
 	}
 
@@ -91,7 +91,7 @@ public abstract class LevelParent {
 		support.removePropertyChangeListener(listener);
 	}
 
-	private void updateScene() {
+	/*private void updateScene() {
 		spawnEnemyUnits();
 		updateActors();
 		generateEnemyFire();
@@ -104,11 +104,22 @@ public abstract class LevelParent {
 		updateKillCount();
 		updateLevelView();
 		checkIfGameOver();
+	}*/
+
+	private void updateScene() {
+		spawnEnemyUnits();
+		updateActors();
+		generateEnemyFire();
+		handleCollisions();
+		removeAllDestroyedActors();
+		updateLevelView();
+		checkIfGameOver();
 	}
+
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
+		KeyFrame gameLoop = new KeyFrame(Duration.millis(GameConstants.MILLISECOND_DELAY), e -> updateScene());
 		timeline.getKeyFrames().add(gameLoop);
 	}
 
@@ -120,17 +131,19 @@ public abstract class LevelParent {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
-		background.setOnKeyPressed(e -> {
-			KeyCode kc = e.getCode();
-			if (kc == KeyCode.UP) user.moveUp();
-			if (kc == KeyCode.DOWN) user.moveDown();
-			if (kc == KeyCode.SPACE) fireProjectile();
-		});
-		background.setOnKeyReleased(e -> {
-			KeyCode kc = e.getCode();
-			if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
-		});
+		background.setOnKeyPressed(e -> handleKeyPress(e.getCode()));
+		background.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
 		root.getChildren().add(background);
+	}
+
+	private void handleKeyPress(KeyCode keyCode) {
+		if (keyCode == KeyCode.UP) user.moveUp();
+		if (keyCode == keyCode.DOWN) user.moveDown();
+		if (keyCode == keyCode.SPACE) fireProjectile();
+	}
+
+	private void handleKeyRelease(KeyCode keyCode) {
+		if (keyCode == KeyCode.UP || keyCode == KeyCode.DOWN) user.stop();
 	}
 
 	private void fireProjectile() {
@@ -171,15 +184,9 @@ public abstract class LevelParent {
 		actors.removeAll(destroyedActors);
 	}
 
-	private void handlePlaneCollisions() {
+	private void handleCollisions() {
 		handleCollisions(friendlyUnits, enemyUnits);
-	}
-
-	private void handleUserProjectileCollisions() {
 		handleCollisions(userProjectiles, enemyUnits);
-	}
-
-	private void handleEnemyProjectileCollisions() {
 		handleCollisions(enemyProjectiles, friendlyUnits);
 	}
 
@@ -195,21 +202,21 @@ public abstract class LevelParent {
 		}
 	}
 
-	private void handleEnemyPenetration() {
+	/*private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {
 				user.takeDamage();
 				enemy.destroy();
 			}
 		}
-	}
+	}*/
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
 	}
 
 	private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
+		for (int i = 0; i < currentNumberOfEnemies.get() - enemyUnits.size(); i++) {
 			user.incrementKillCount();
 		}
 	}
@@ -258,6 +265,6 @@ public abstract class LevelParent {
 	}
 
 	private void updateNumberOfEnemies() {
-		currentNumberOfEnemies = enemyUnits.size();
+		currentNumberOfEnemies.set(enemyUnits.size());
 	}
 }
