@@ -19,12 +19,11 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 		}
 	}
 
-	protected double getProjectileXPosition(double xPositionOffset) {
-		return getLayoutX() + getTranslateX() + xPositionOffset;
-	}
-
-	protected double getProjectileYPosition(double yPositionOffset) {
-		return getLayoutY() + getTranslateY() + yPositionOffset;
+	protected double[] getProjectilePosition(double xPositionOffset, double yPositionOffset) {
+		return new double[] {
+				getLayoutX() + getTranslateX() + xPositionOffset,
+				getLayoutY() + getTranslateY() + yPositionOffset
+		};
 	}
 
 	public int getHealth() {
