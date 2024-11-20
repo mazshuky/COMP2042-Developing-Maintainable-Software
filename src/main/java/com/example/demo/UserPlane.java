@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.List;
+// import javafx.geometry.Bounds;
+
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane.png";
@@ -13,12 +16,14 @@ public class UserPlane extends FighterPlane {
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 	private int velocityMultiplier;
 	private int numberOfKills;
+	private final HeartDisplay heartDisplay;
 
-	public UserPlane(int initialHealth) {
+	public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
+		this.heartDisplay = heartDisplay;
 	}
-	
+
 	@Override
 	public void updatePosition() {
 		if (isMoving()) {
@@ -65,5 +70,42 @@ public class UserPlane extends FighterPlane {
 	public void incrementKillCount() {
 		numberOfKills++;
 	}
+
+	/*public Bounds getCustomBounds() {
+		return this.localToParent(this.getBoundsInLocal());
+	}*/
+
+	public boolean collidesWith(EnemyPlane enemyPlane) {
+		return this.getBoundsInParent().intersects(enemyPlane.getBoundsInParent());
+	}
+
+	public boolean collidesWith(EnemyProjectile enemyProjectile) {
+		return this.getBoundsInParent().intersects(enemyProjectile.getBoundsInParent());
+	}
+
+	public void checkCollisions(List<EnemyPlane> enemyPlanes, List<EnemyProjectile> enemyProjectiles) {
+		for (EnemyPlane enemyPlane : enemyPlanes) {
+			if (collidesWith(enemyPlane)) {
+				handleCollisions();
+				break;
+			}
+		}
+
+		for (EnemyProjectile enemyProjectile : enemyProjectiles) {
+			if (collidesWith(enemyProjectile)) {
+				handleCollisions();
+				break;
+			}
+		}
+	}
+
+	private void handleCollisions() {
+		heartDisplay.removeHeart();
+	}
+
+	/*public void updateGame(List<EnemyPlane> enemyPlanes, List<EnemyProjectile> enemyProjectiles) {
+		updatePosition();
+		checkCollisions(enemyPlanes, enemyProjectiles);
+	}*/
 
 }
