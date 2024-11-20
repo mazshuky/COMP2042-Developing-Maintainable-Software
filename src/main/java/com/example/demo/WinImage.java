@@ -10,7 +10,10 @@ public class WinImage extends ImageView {
 	private static final int WIDTH = 600;
 	
 	public WinImage(double xPosition, double yPosition) {
-		this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
+		var resource = getClass().getResource(IMAGE_NAME);
+		if (resource != null) {
+			setImage(new Image(resource.toExternalForm()));
+		}
 		this.setVisible(false);
 		this.setFitHeight(HEIGHT);
 		this.setFitWidth(WIDTH);
