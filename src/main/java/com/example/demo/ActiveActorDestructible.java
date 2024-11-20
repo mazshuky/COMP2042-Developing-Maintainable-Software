@@ -50,7 +50,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	 *
 	 * @param isDestroyed   the new destroyed state
 	 */
-    protected void setDestroyed(boolean isDestroyed) {
+	protected void setDestroyed(boolean isDestroyed) {
 	 	this.isDestroyed = isDestroyed;
 	}
 
