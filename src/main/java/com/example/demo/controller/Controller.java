@@ -11,13 +11,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
+import com.example.demo.HeartDisplay;
+
 public class Controller implements PropertyChangeListener {
 
 	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
 	private final Stage stage;
+	private final HeartDisplay heartDisplay;
 
 	public Controller(Stage stage) {
 		this.stage = stage;
+		this.heartDisplay = new HeartDisplay(stage.getHeight(), stage.getWidth(), 5);
 	}
 
 	public void launchGame(Stage stage) throws CustomException {
@@ -43,8 +47,8 @@ public class Controller implements PropertyChangeListener {
 	private LevelParent createLevelInstance(String className) throws ClassNotFoundException, NoSuchMethodException,
 			InstantiationException, IllegalAccessException, InvocationTargetException {
 		Class<?> myClass = Class.forName(className);
-		Constructor<?> constructor = myClass.getConstructor(double.class, double.class);
-		return (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth());
+		Constructor<?> constructor = myClass.getConstructor(double.class, double.class, HeartDisplay.class);
+		return (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth(), heartDisplay);
 	}
 
 	private void setupScene(LevelParent myLevel) {
