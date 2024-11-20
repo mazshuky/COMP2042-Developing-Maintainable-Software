@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import java.net.URL;
 
-/*
+/**
  * Class representing the heart display in the game
  */
 public class HeartDisplay {

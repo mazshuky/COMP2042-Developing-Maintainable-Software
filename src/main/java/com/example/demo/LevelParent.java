@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-//import javafx.scene.input.KeyEvent; it's unused so hide it
 import javafx.util.Duration;
 
 public abstract class LevelParent {
@@ -36,12 +35,14 @@ public abstract class LevelParent {
 	private final LevelView levelView;
 	private final PropertyChangeSupport support; // For notifying observers
 	private final SimpleIntegerProperty currentNumberOfEnemies;
+	private final HeartDisplay heartDisplay;
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, HeartDisplay heartDisplay) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.user = new UserPlane(playerInitialHealth);
+		this.user = new UserPlane(playerInitialHealth, heartDisplay);
+		this.heartDisplay = heartDisplay;
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -97,7 +98,6 @@ public abstract class LevelParent {
 		updateLevelView();
 		checkIfGameOver();
 	}
-
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
@@ -239,5 +239,9 @@ public abstract class LevelParent {
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies.set(enemyUnits.size());
+	}
+
+	public HeartDisplay getHeartDisplay() {
+		return heartDisplay;
 	}
 }
