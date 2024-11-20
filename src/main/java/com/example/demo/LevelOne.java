@@ -2,8 +2,8 @@ package com.example.demo;
 
 public class LevelOne extends LevelParent {
 
-	public LevelOne(double screenHeight, double screenWidth) {
-		super(GameConstants.BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH);
+	public LevelOne(double screenHeight, double screenWidth, HeartDisplay heartDisplay) {
+		super(GameConstants.BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH, heartDisplay);
 	}
 
 	@Override
