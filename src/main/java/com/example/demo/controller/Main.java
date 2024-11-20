@@ -11,7 +11,6 @@ public class Main extends Application {
 	private static final int SCREEN_WIDTH = 1300;
 	private static final int SCREEN_HEIGHT = 750;
 	private static final String TITLE = "Sky Battle";
-	private Controller myController;
 
 	/**
 	 * Starts the JavaFX application
@@ -26,7 +25,7 @@ public class Main extends Application {
 			stage.setResizable(false);
 			stage.setHeight(SCREEN_HEIGHT);
 			stage.setWidth(SCREEN_WIDTH);
-			myController = new Controller(stage);
+			Controller myController = new Controller(stage);
 			myController.launchGame(stage);
 
 		} catch (SecurityException | IllegalArgumentException e) {
