@@ -124,8 +124,8 @@ public abstract class LevelParent {
 
 	private void handleKeyPress(KeyCode keyCode) {
 		if (keyCode == KeyCode.UP) user.moveUp();
-		if (keyCode == keyCode.DOWN) user.moveDown();
-		if (keyCode == keyCode.SPACE) fireProjectile();
+		if (keyCode == KeyCode.DOWN) user.moveDown();
+		if (keyCode == KeyCode.SPACE) fireProjectile();
 	}
 
 	private void handleKeyRelease(KeyCode keyCode) {
