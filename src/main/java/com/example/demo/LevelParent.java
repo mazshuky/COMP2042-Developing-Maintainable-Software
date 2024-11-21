@@ -33,7 +33,7 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	private final LevelView levelView;
-	private final PropertyChangeSupport support; // For notifying observers
+	private final PropertyChangeSupport support;
 	private final SimpleIntegerProperty currentNumberOfEnemies;
 	private final HeartDisplay heartDisplay;
 
@@ -94,6 +94,7 @@ public abstract class LevelParent {
 		updateActors();
 		generateEnemyFire();
 		handleCollisions();
+		handlePenetratedEnemies();
 		removeAllDestroyedActors();
 		updateLevelView();
 		checkIfGameOver();
@@ -186,6 +187,15 @@ public abstract class LevelParent {
 					otherActor.takeDamage();
 				}
 			}
+		}
+	}
+
+	private void handlePenetratedEnemies() {
+		List<ActiveActorDestructible> penetratedEnemies = enemyUnits.stream()
+				.filter(this::enemyHasPenetratedDefenses)
+				.toList();
+		for (ActiveActorDestructible enemy : penetratedEnemies) {
+			enemy.takeDamage();
 		}
 	}
 
