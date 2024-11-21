@@ -18,6 +18,7 @@ public class Controller implements PropertyChangeListener {
 	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
 	private final Stage stage;
 	private final HeartDisplay heartDisplay;
+	private LevelParent currentLevel;
 
 	public Controller(Stage stage) {
 		this.stage = stage;
@@ -35,9 +36,13 @@ public class Controller implements PropertyChangeListener {
 
 	private void goToLevel(String className) throws CustomException {
 		try {
+			if (currentLevel != null) {
+				currentLevel.removePropertyChangeListener(this);
+			}
 			LevelParent myLevel = createLevelInstance(className);
 			setupScene(myLevel);
 			myLevel.startGame();
+			currentLevel = myLevel;
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
 				 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new CustomException("Error going to level: " + className, e);
