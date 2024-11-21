@@ -107,7 +107,10 @@ public abstract class LevelParent {
 
 	private void initializeBackground(String backgroundImageName) {
 		if (backgroundImageName != null) {
-			background.setImage(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
+			var resource = getClass().getResource(backgroundImageName);
+			if (resource != null) {
+				background.setImage(new Image(resource.toExternalForm()));
+			}
 		}
 
 		background.setFocusTraversable(true);
@@ -135,7 +138,7 @@ public abstract class LevelParent {
 	}
 
 	private void generateEnemyFire() {
-		enemyUnits.forEach(fenemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
+		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
 	}
 
 	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
