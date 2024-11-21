@@ -76,35 +76,31 @@ public class UserPlane extends FighterPlane {
 		numberOfKills++;
 	}
 
-	public boolean collidesWith(EnemyPlane enemyPlane) {
-		return this.getBoundsInParent().intersects(enemyPlane.getBoundsInParent());
-	}
-
-	public boolean collidesWith(EnemyProjectile enemyProjectile) {
-		return this.getBoundsInParent().intersects(enemyProjectile.getBoundsInParent());
-	}
-
-	public void checkCollisions(List<EnemyPlane> enemyPlanes, List<EnemyProjectile> enemyProjectiles) {
-		for (EnemyPlane enemyPlane : enemyPlanes) {
-			if (collidesWith(enemyPlane)) {
-				handleCollisions();
-				break;
-			}
-		}
-
-		for (EnemyProjectile enemyProjectile : enemyProjectiles) {
-			if (collidesWith(enemyProjectile)) {
-				handleCollisions();
-				break;
-			}
-		}
+	public boolean collidesWith(ActiveActorDestructible otherActor) {
+		return this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
 	}
 
 	private void handleCollisions() {
 		heartDisplay.removeHeart();
 	}
 
-	public void updateGame(List<EnemyPlane> enemyPlanes, List<EnemyProjectile> enemyProjectiles) {
+	public void checkCollisions(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
+		for (ActiveActorDestructible enemy : enemyPlanes) {
+			if (collidesWith(enemy)) {
+				handleCollisions();
+				break;
+			}
+		}
+
+		for (ActiveActorDestructible projectile : enemyProjectiles) {
+			if (collidesWith(projectile)) {
+				handleCollisions();
+				break;
+			}
+		}
+	}
+
+	public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
 		updatePosition();
 		checkCollisions(enemyPlanes, enemyProjectiles);
 	}
