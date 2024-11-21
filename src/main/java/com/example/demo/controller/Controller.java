@@ -53,7 +53,7 @@ public class Controller implements PropertyChangeListener {
 			InstantiationException, IllegalAccessException, InvocationTargetException {
 		Class<?> myClass = Class.forName(className);
 		Constructor<?> constructor = myClass.getConstructor(double.class, double.class, HeartDisplay.class);
-		return (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth(), heartDisplay);
+		return (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth(), currentLevel != null ? currentLevel.getHeartDisplay() : heartDisplay);
 	}
 
 	private void setupScene(LevelParent myLevel) {
