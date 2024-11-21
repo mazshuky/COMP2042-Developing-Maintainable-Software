@@ -19,6 +19,7 @@ public class Boss extends FighterPlane {
 	private static final int Y_POSITION_UPPER_BOUND = -100;
 	private static final int Y_POSITION_LOWER_BOUND = 475;
 	private static final int MAX_FRAMES_WITH_SHIELD = 500;
+
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
@@ -39,8 +40,7 @@ public class Boss extends FighterPlane {
 	public void updatePosition() {
 		double initialTranslateY = getTranslateY();
 		moveVertically(getNextMove());
-		double currentPosition = getLayoutY() + getTranslateY();
-		if (currentPosition < Y_POSITION_UPPER_BOUND || currentPosition > Y_POSITION_LOWER_BOUND) {
+		if (isOutOfBounds()) {
 			setTranslateY(initialTranslateY);
 		}
 	}
@@ -115,6 +115,11 @@ public class Boss extends FighterPlane {
 	private void deactivateShield() {
 		isShielded = false;
 		framesWithShieldActivated = 0;
+	}
+
+	private boolean isOutOfBounds() {
+		double currentPosition = getLayoutY() + getTranslateY();
+		return currentPosition < Y_POSITION_UPPER_BOUND || currentPosition > Y_POSITION_LOWER_BOUND;
 	}
 
 }
