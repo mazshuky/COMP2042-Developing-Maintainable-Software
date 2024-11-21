@@ -82,12 +82,7 @@ public class Boss extends FighterPlane {
 		int currentMove = movePattern.get(indexOfCurrentMove);
 		consecutiveMovesInSameDirection++;
 		if (consecutiveMovesInSameDirection == MAX_FRAMES_WITH_SAME_MOVE) {
-			Collections.shuffle(movePattern);
-			consecutiveMovesInSameDirection = 0;
-			indexOfCurrentMove++;
-		}
-		if (indexOfCurrentMove == movePattern.size()) {
-			indexOfCurrentMove = 0;
+			resetMovePattern();
 		}
 		return currentMove;
 	}
@@ -120,6 +115,15 @@ public class Boss extends FighterPlane {
 	private boolean isOutOfBounds() {
 		double currentPosition = getLayoutY() + getTranslateY();
 		return currentPosition < Y_POSITION_UPPER_BOUND || currentPosition > Y_POSITION_LOWER_BOUND;
+	}
+
+	private void resetMovePattern() {
+		Collections.shuffle(movePattern);
+		consecutiveMovesInSameDirection = 0;
+		indexOfCurrentMove++;
+		if (indexOfCurrentMove == movePattern.size()) {
+			indexOfCurrentMove = 0;
+		}
 	}
 
 }
