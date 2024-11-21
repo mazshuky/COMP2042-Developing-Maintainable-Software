@@ -2,16 +2,14 @@ package com.example.demo.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import com.example.demo.LevelParent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-
 import com.example.demo.HeartDisplay;
+import com.example.demo.LevelOne;
 
 public class Controller implements PropertyChangeListener {
 
@@ -39,21 +37,22 @@ public class Controller implements PropertyChangeListener {
 			if (currentLevel != null) {
 				currentLevel.removePropertyChangeListener(this);
 			}
+
 			LevelParent myLevel = createLevelInstance(className);
 			setupScene(myLevel);
 			myLevel.startGame();
 			currentLevel = myLevel;
-		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-				 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (Exception e) {
 			throw new CustomException("Error going to level: " + className, e);
 		}
 	}
 
-	private LevelParent createLevelInstance(String className) throws ClassNotFoundException, NoSuchMethodException,
-			InstantiationException, IllegalAccessException, InvocationTargetException {
-		Class<?> myClass = Class.forName(className);
-		Constructor<?> constructor = myClass.getConstructor(double.class, double.class, HeartDisplay.class);
-		return (LevelParent) constructor.newInstance(stage.getHeight(), stage.getWidth(), currentLevel != null ? currentLevel.getHeartDisplay() : heartDisplay);
+	private LevelParent createLevelInstance(String className) {
+		if (LEVEL_ONE_CLASS_NAME.equals(className)) {
+			return new LevelOne(stage.getHeight(), stage.getWidth(), heartDisplay);
+		}
+		// Add other levels if necessary here
+		throw new IllegalArgumentException("Unknown level class: " + className);
 	}
 
 	private void setupScene(LevelParent myLevel) {
