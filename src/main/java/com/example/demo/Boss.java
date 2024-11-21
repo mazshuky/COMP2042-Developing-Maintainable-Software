@@ -73,9 +73,14 @@ public class Boss extends FighterPlane {
 	}
 
 	private void updateShield() {
-		if (isShielded) framesWithShieldActivated++;
-		else if (shieldShouldBeActivated()) activateShield();	
-		if (shieldExhausted()) deactivateShield();
+		if (isShielded) {
+			framesWithShieldActivated++;
+		} else if (shieldShouldBeActivated()) {
+			activateShield();
+		}
+		if (shieldExhausted()) {
+			deactivateShield();
+		}
 	}
 
 	private int getNextMove() {
