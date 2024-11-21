@@ -14,6 +14,7 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
+
 	private int velocityMultiplier;
 	private int numberOfKills;
 	private final HeartDisplay heartDisplay;
@@ -26,16 +27,21 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public void updatePosition() {
-		if (isMoving()) {
-			double initialTranslateY = getTranslateY();
-			this.moveVertically(VERTICAL_VELOCITY * velocityMultiplier);
-			double newPosition = getLayoutY() + getTranslateY();
-			if (newPosition < Y_UPPER_BOUND || newPosition > Y_LOWER_BOUND) {
-				this.setTranslateY(initialTranslateY);
-			}
+		if (!isMoving()) {
+			return;
+		}
+		double initialTranslateY = getTranslateY();
+		moveVertically(VERTICAL_VELOCITY * velocityMultiplier);
+		if (isOutOfBounds()) {
+			setTranslateY(initialTranslateY);
 		}
 	}
-	
+
+	private boolean isOutOfBounds() {
+		double newPosition = getLayoutY() + getTranslateY();
+		return newPosition < Y_UPPER_BOUND || newPosition > Y_LOWER_BOUND;
+	}
+
 	@Override
 	public void updateActor() {
 		updatePosition();
