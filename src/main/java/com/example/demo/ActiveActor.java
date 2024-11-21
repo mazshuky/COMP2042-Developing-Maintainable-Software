@@ -18,7 +18,10 @@ public abstract class ActiveActor extends ImageView {
 	 * @param initialYPos  the initial y position
 	 */
 	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
-		this.setImage(new Image(getClass().getResource(IMAGE_LOCATION + imageName).toExternalForm()));
+		var resource = getClass().getResource(IMAGE_LOCATION + imageName);
+		if (resource != null) {
+			this.setImage(new Image(resource.toExternalForm()));
+		}
 		this.setLayoutX(initialXPos);
 		this.setLayoutY(initialYPos);
 		this.setFitHeight(imageHeight);
