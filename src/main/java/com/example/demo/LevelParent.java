@@ -135,7 +135,7 @@ public abstract class LevelParent {
 	}
 
 	private void generateEnemyFire() {
-		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
+		enemyUnits.forEach(fenemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
 	}
 
 	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
@@ -164,6 +164,8 @@ public abstract class LevelParent {
 				.toList();
 		root.getChildren().removeAll(destroyedActors);
 		actors.removeAll(destroyedActors);
+		updateNumberOfEnemies();
+		updateKillCount();
 	}
 
 	private void handleCollisions() {
