@@ -105,4 +105,8 @@ public class UserPlane extends FighterPlane {
 		checkCollisions(enemyPlanes, enemyProjectiles);
 	}
 
+	public HeartDisplay getHeartDisplay() {
+		return heartDisplay;
+	}
+
 }
