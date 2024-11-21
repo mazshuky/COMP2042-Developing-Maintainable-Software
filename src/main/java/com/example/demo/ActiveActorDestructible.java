@@ -42,16 +42,7 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 	 */
 	@Override
 	public void destroy() {
-		setDestroyed(true);
-	}
-
-	/**
-	 * Sets the destroyed state of the actor
-	 *
-	 * @param isDestroyed   the new destroyed state
-	 */
-	protected void setDestroyed(boolean isDestroyed) {
-	 	this.isDestroyed = isDestroyed;
+		isDestroyed = true;
 	}
 
 	/**
