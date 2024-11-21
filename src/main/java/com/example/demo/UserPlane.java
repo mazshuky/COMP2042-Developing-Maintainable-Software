@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import java.util.List;
-// import javafx.geometry.Bounds;
 
 public class UserPlane extends FighterPlane {
 
@@ -77,10 +76,6 @@ public class UserPlane extends FighterPlane {
 		numberOfKills++;
 	}
 
-	/*public Bounds getCustomBounds() {
-		return this.localToParent(this.getBoundsInLocal());
-	}*/
-
 	public boolean collidesWith(EnemyPlane enemyPlane) {
 		return this.getBoundsInParent().intersects(enemyPlane.getBoundsInParent());
 	}
@@ -109,9 +104,9 @@ public class UserPlane extends FighterPlane {
 		heartDisplay.removeHeart();
 	}
 
-	/*public void updateGame(List<EnemyPlane> enemyPlanes, List<EnemyProjectile> enemyProjectiles) {
+	public void updateGame(List<EnemyPlane> enemyPlanes, List<EnemyProjectile> enemyProjectiles) {
 		updatePosition();
 		checkCollisions(enemyPlanes, enemyProjectiles);
-	}*/
+	}
 
 }
