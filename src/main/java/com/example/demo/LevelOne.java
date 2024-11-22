@@ -10,8 +10,8 @@ public class LevelOne extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
-		}
-		else if (userHasReachedKillTarget()) {
+		} else if (userHasReachedKillTarget()) {
+			System.out.println("User has reached kill target");
 			goToNextLevel(GameConstants.NEXT_LEVEL);
 		}
 	}
