@@ -35,14 +35,12 @@ public abstract class LevelParent {
 	private final LevelView levelView;
 	private final PropertyChangeSupport support;
 	private final SimpleIntegerProperty currentNumberOfEnemies;
-	private final HeartDisplay heartDisplay;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, HeartDisplay heartDisplay) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
 		this.user = new UserPlane(playerInitialHealth, heartDisplay);
-		this.heartDisplay = heartDisplay;
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -78,7 +76,17 @@ public abstract class LevelParent {
 	}
 
 	public void goToNextLevel(String levelName) {
+		if ("LevelTwo".equals(levelName)) {
+			LevelTwo levelTwo = new LevelTwo(screenHeight, screenWidth, user.getHeartDisplay());
+			Scene levelTwoScene = levelTwo.initializeScene();
+			setScene(levelTwoScene);
+			levelTwo.startGame();
+		}
 		support.firePropertyChange("levelChange", null, levelName); // Notify listeners of level change
+	}
+
+	public void setScene(Scene scene) {
+		this.scene.setRoot(scene.getRoot());
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -98,6 +106,7 @@ public abstract class LevelParent {
 		removeAllDestroyedActors();
 		updateLevelView();
 		checkIfGameOver();
+		user.updateGame(enemyUnits, enemyProjectiles);
 	}
 
 	private void initializeTimeline() {
@@ -206,6 +215,9 @@ public abstract class LevelParent {
 	private void updateKillCount() {
 		for (int i = 0; i < currentNumberOfEnemies.get() - enemyUnits.size(); i++) {
 			user.incrementKillCount();
+			if (user.getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
+				goToNextLevel(GameConstants.NEXT_LEVEL);
+			}
 		}
 	}
 
@@ -231,6 +243,14 @@ public abstract class LevelParent {
 		return root;
 	}
 
+	protected ImageView getBackground() {
+		return background;
+	}
+
+	protected Timeline getTimeline() {
+		return timeline;
+	}
+
 	protected int getCurrentNumberOfEnemies() {
 		return enemyUnits.size();
 	}
@@ -254,9 +274,5 @@ public abstract class LevelParent {
 
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies.set(enemyUnits.size());
-	}
-
-	public HeartDisplay getHeartDisplay() {
-		return heartDisplay;
 	}
 }
