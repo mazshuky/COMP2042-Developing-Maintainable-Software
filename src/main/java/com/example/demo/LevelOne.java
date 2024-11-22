@@ -11,8 +11,13 @@ public class LevelOne extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		}
-		else if (userHasReachedKillTarget())
+		else if (userHasReachedKillTarget()) {
 			goToNextLevel(GameConstants.NEXT_LEVEL);
+		}
+	}
+
+	private boolean userHasReachedKillTarget() {
+		return getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE;
 	}
 
 	@Override
@@ -44,9 +49,5 @@ public class LevelOne extends LevelParent {
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), GameConstants.PLAYER_INITIAL_HEALTH);
-	}
-
-	private boolean userHasReachedKillTarget() {
-		return getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE;
 	}
 }
