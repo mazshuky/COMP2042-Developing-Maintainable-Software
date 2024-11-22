@@ -38,4 +38,9 @@ public class LevelTwo extends LevelParent {
 		return new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
+	@Override
+	public void startGame() {
+		getBackground().requestFocus();
+		getTimeline().play();
+	}
 }
