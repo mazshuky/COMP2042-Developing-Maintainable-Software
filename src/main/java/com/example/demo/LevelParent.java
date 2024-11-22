@@ -212,15 +212,6 @@ public abstract class LevelParent {
 		levelView.removeHearts(user.getHealth());
 	}
 
-	/*private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies.get() - enemyUnits.size(); i++) {
-			user.incrementKillCount();
-			if (user.getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
-				goToNextLevel(GameConstants.NEXT_LEVEL);
-			}
-		}
-	}*/
-
 	private void updateKillCount() {
     int kills = currentNumberOfEnemies.get() - enemyUnits.size();
     for (int i = 0; i < kills; i++) {
