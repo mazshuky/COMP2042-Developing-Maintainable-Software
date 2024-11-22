@@ -76,7 +76,7 @@ public abstract class LevelParent {
 	}
 
 	public void goToNextLevel(String levelName) {
-		if ("LevelTwo".equals(levelName)) {
+		if ("com.example.demo.LevelTwo".equals(levelName)) {
 			LevelTwo levelTwo = new LevelTwo(screenHeight, screenWidth, user.getHeartDisplay());
 			Scene levelTwoScene = levelTwo.initializeScene();
 			setScene(levelTwoScene);
@@ -212,13 +212,27 @@ public abstract class LevelParent {
 		levelView.removeHearts(user.getHealth());
 	}
 
-	private void updateKillCount() {
+	/*private void updateKillCount() {
 		for (int i = 0; i < currentNumberOfEnemies.get() - enemyUnits.size(); i++) {
 			user.incrementKillCount();
 			if (user.getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
 				goToNextLevel(GameConstants.NEXT_LEVEL);
 			}
 		}
+	}*/
+
+	private void updateKillCount() {
+    int kills = currentNumberOfEnemies.get() - enemyUnits.size();
+    for (int i = 0; i < kills; i++) {
+        user.incrementKillCount();
+		System.out.println("Kill count: " + user.getNumberOfKills());
+        if (user.getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
+			System.out.println("Advancing to the next level");
+            goToNextLevel(GameConstants.NEXT_LEVEL);
+            break;
+        }
+    }
+    currentNumberOfEnemies.set(enemyUnits.size());
 	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
