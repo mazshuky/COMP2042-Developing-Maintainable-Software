@@ -51,7 +51,6 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-			//playSound("userplaneshoot.wav");
 			if (shootSound != null) {
 				shootSound.play();
 			}
@@ -59,31 +58,6 @@ public class UserPlane extends FighterPlane {
 			double[] projectilePosition = getProjectilePosition(PROJECTILE_X_POSITION, PROJECTILE_Y_POSITION_OFFSET);
 			return new UserProjectile(projectilePosition[0], projectilePosition[1]);
 	}
-
-	/*private void playSound(String soundName) {
-		try {
-			String soundPath = "com/example/demo/sounds/" + soundName;
-			URL soundURL = getClass().getClassLoader().getResource(soundPath);
-
-			if (soundURL == null) {
-				throw new IllegalArgumentException("Sound file not found: " + soundPath);
-			}
-
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundURL);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.start();
-
-			clip.addLineListener(event -> {
-				if (event.getType() == javax.sound.sampled.LineEvent.Type.STOP) {
-					clip.close();
-				}
-			});
-		} catch (Exception e) {
-			System.out.println("Error with playing sound: " + e.getMessage());
-			e.printStackTrace();
-		}
-	}*/
 
 	private void loadShootSound() {
 		try {
