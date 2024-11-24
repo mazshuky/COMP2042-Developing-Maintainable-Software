@@ -11,7 +11,7 @@ import java.net.URL;
 public class HeartDisplay {
 
 	private static final String HEART_IMAGE_NAME = "/com/example/demo/images/heart.png";
-	private static final int HEART_HEIGHT = 50;
+	private static final int HEART_HEIGHT = 30;
 	private static final int INDEX_OF_FIRST_ITEM = 0;
 
 	private final HBox container;
