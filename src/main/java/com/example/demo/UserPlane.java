@@ -1,10 +1,7 @@
 package com.example.demo;
 
 import java.util.List;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import java.net.URL;
+import javafx.scene.media.AudioClip;
 
 public class UserPlane extends FighterPlane {
 
@@ -21,11 +18,13 @@ public class UserPlane extends FighterPlane {
 	private int velocityMultiplier;
 	private int numberOfKills;
 	private final HeartDisplay heartDisplay;
+	private AudioClip shootSound;
 
 	public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
 		this.heartDisplay = heartDisplay;
+		loadShootSound();
 	}
 
 	@Override
@@ -52,12 +51,16 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-			playSound("userplaneshoot.wav");
+			//playSound("userplaneshoot.wav");
+			if (shootSound != null) {
+				shootSound.play();
+			}
+
 			double[] projectilePosition = getProjectilePosition(PROJECTILE_X_POSITION, PROJECTILE_Y_POSITION_OFFSET);
 			return new UserProjectile(projectilePosition[0], projectilePosition[1]);
 	}
 
-	private void playSound(String soundName) {
+	/*private void playSound(String soundName) {
 		try {
 			String soundPath = "com/example/demo/sounds/" + soundName;
 			URL soundURL = getClass().getClassLoader().getResource(soundPath);
@@ -78,6 +81,19 @@ public class UserPlane extends FighterPlane {
 			});
 		} catch (Exception e) {
 			System.out.println("Error with playing sound: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}*/
+
+	private void loadShootSound() {
+		try {
+			var resource = getClass().getResource("/com/example/demo/sounds/userplaneshoot.wav");
+			if (resource != null) {
+				shootSound = new AudioClip(resource.toExternalForm());
+			} else {
+				System.err.println("Sound file not found: /com/example/demo/sounds/userplaneshoot.wav");
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
