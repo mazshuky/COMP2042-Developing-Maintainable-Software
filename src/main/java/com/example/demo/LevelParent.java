@@ -151,7 +151,7 @@ public abstract class LevelParent {
 
 	protected void checkIfGameOver() {
         if (user.isDestroyed() || user.getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
-            goToNextLevel(GameConstants.NEXT_LEVEL);
+            goToNextLevel(GameConstants.LEVEL_TWO);
         }
 	}
 
@@ -238,7 +238,7 @@ public abstract class LevelParent {
 			System.out.println("Kill count: " + getUser().getNumberOfKills());
 			if (getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
 				System.out.println("Advancing to the next level");
-				goToNextLevel(GameConstants.NEXT_LEVEL);
+				goToNextLevel(GameConstants.LEVEL_TWO);
 				break;
 			}
 		}
