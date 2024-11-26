@@ -204,20 +204,6 @@ public abstract class LevelParent {
 		updateKillCount();
 	}
 
-	/*public void goToNextLevel(String levelName) {
-		enemyUnits.clear();
-		root.getChildren().removeAll(enemyUnits);
-
-		if ("com.example.demo.LevelTwo".equals(levelName)) {
-			LevelTwo levelTwo = new LevelTwo(screenHeight, screenWidth, user.getHeartDisplay());
-			Scene levelTwoScene = levelTwo.initializeScene();
-			setScene(levelTwoScene);
-			levelTwo.startGame();
-		}
-		support.firePropertyChange("levelChange", null, levelName);
-	}*/
-
-
 	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
 		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
 				.toList();
