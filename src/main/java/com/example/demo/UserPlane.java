@@ -22,8 +22,12 @@ public class UserPlane extends FighterPlane {
 
 	public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
-		velocityMultiplier = 0;
 		this.heartDisplay = heartDisplay;
+		initUserPlane();
+	}
+
+	private void initUserPlane() {
+		velocityMultiplier = 0;
 		loadShootSound();
 	}
 
@@ -54,7 +58,6 @@ public class UserPlane extends FighterPlane {
 			if (shootSound != null) {
 				shootSound.play();
 			}
-
 			double[] projectilePosition = getProjectilePosition(PROJECTILE_X_POSITION, PROJECTILE_Y_POSITION_OFFSET);
 			return new UserProjectile(projectilePosition[0], projectilePosition[1]);
 	}
