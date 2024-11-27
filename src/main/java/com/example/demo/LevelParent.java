@@ -213,6 +213,7 @@ public abstract class LevelParent {
 			int numberOfDestroyedEnemies = destroyedActors.size();
 			for (int i = 0; i < numberOfDestroyedEnemies; i++) {
 				getUser().incrementKillCount();
+				getUser().playExplosionSound();
 			}
 		}
 		actors.removeAll(destroyedActors);
