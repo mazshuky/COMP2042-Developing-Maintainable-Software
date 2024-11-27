@@ -79,6 +79,7 @@ public class Controller implements PropertyChangeListener {
 
 	private void handleLevelChangeEvent(PropertyChangeEvent event) {
 		String newLevel = (String) event.getNewValue();
+		System.out.println("Handling level change event. Transitioning to: " + newLevel);
 		try {
 			goToLevel(newLevel);
 		} catch (CustomException e) {
