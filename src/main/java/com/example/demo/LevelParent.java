@@ -227,11 +227,6 @@ public abstract class LevelParent {
 		checkIfGameOver();
 	}
 
-	private void clearEnemies() {
-		enemyUnits.clear();
-		root.getChildren().removeIf(node -> node instanceof EnemyPlane);
-	}
-
 	private void updateKillCount() {
 		int kills = getCurrentNumberOfEnemies() - enemyUnits.size();
 		for (int i = 0; i < kills; i++) {
