@@ -35,6 +35,7 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	private final SimpleIntegerProperty currentNumberOfEnemies;
+	private long lastSpawnTime;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, HeartDisplay heartDisplay) {
 		this.screenHeight = screenHeight;
@@ -55,6 +56,7 @@ public abstract class LevelParent {
 		this.levelView = instantiateLevelView();
 		this.support = new PropertyChangeSupport(this);
 		this.currentNumberOfEnemies = new SimpleIntegerProperty(0);
+		this.lastSpawnTime = 0;
 
 		initializeBackground(backgroundImageName);
 		initializeTimeline();
@@ -82,10 +84,6 @@ public abstract class LevelParent {
 		root.getChildren().removeIf(node -> node instanceof EnemyPlane);
 		support.firePropertyChange("levelChange", null, levelName);
 	}
-
-	/*public void setScene(Scene newScene) {
-		scene.setRoot(newScene.getRoot());
-	}*/
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		support.addPropertyChangeListener(listener);
@@ -147,6 +145,14 @@ public abstract class LevelParent {
 			root.getChildren().add(projectile);
 			enemyProjectiles.add(projectile);
 		}
+	}
+
+	protected long getLastSpawnTime() {
+		return lastSpawnTime;
+	}
+
+	protected void setLastSpawnTime(long lastSpawnTime) {
+		this.lastSpawnTime = lastSpawnTime;
 	}
 
 	protected void checkIfGameOver() {
