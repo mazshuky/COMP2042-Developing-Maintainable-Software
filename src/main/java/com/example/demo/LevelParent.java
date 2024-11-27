@@ -150,7 +150,7 @@ public abstract class LevelParent {
 	}
 
 	protected void checkIfGameOver() {
-        if (user.isDestroyed() || user.getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
+        if (getUser().isDestroyed() || getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
             goToNextLevel(GameConstants.LEVEL_TWO);
         }
 	}
@@ -208,8 +208,16 @@ public abstract class LevelParent {
 		List<ActiveActorDestructible> destroyedActors = actors.stream().filter(ActiveActorDestructible::isDestroyed)
 				.toList();
 		root.getChildren().removeAll(destroyedActors);
+
+		if (actors == enemyUnits) {
+			int numberOfDestroyedEnemies = destroyedActors.size();
+			for (int i = 0; i < numberOfDestroyedEnemies; i++) {
+				getUser().incrementKillCount();
+			}
+		}
 		actors.removeAll(destroyedActors);
 		updateNumberOfEnemies();
+		checkIfGameOver();
 	}
 
 	private void clearEnemies() {
