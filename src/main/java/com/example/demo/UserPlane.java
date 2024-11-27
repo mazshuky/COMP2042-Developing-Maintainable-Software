@@ -19,6 +19,7 @@ public class UserPlane extends FighterPlane {
 	private int numberOfKills;
 	private final HeartDisplay heartDisplay;
 	private AudioClip shootSound;
+	private AudioClip explosionSound;
 
 	public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
@@ -29,6 +30,7 @@ public class UserPlane extends FighterPlane {
 	private void initUserPlane() {
 		velocityMultiplier = 0;
 		loadShootSound();
+		loadExplosionSound();
 	}
 
 	@Override
@@ -75,6 +77,19 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
+	private void loadExplosionSound() {
+		try {
+			var resource = getClass().getResource("/com/example/demo/sounds/enemyplaneexplode.wav");
+			if (resource != null) {
+				explosionSound = new AudioClip(resource.toExternalForm());
+			} else {
+				System.err.println("Sound file not found: /com/example/demo/sounds/enemyplaneexplode.wav");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private boolean isMoving() {
 		return velocityMultiplier != 0;
 	}
@@ -98,6 +113,12 @@ public class UserPlane extends FighterPlane {
 	public void incrementKillCount() {
 		numberOfKills++;
 		System.out.println("Incremented kill count. Current number of kills: " + numberOfKills);
+	}
+
+	public void playExplosionSound() {
+		if (explosionSound != null) {
+			explosionSound.play();
+		}
 	}
 
 	public boolean collidesWith(ActiveActorDestructible otherActor) {
