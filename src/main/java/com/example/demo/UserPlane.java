@@ -97,6 +97,7 @@ public class UserPlane extends FighterPlane {
 
 	public void incrementKillCount() {
 		numberOfKills++;
+		System.out.println("Incremented kill count. Current number of kills: " + numberOfKills);
 	}
 
 	public boolean collidesWith(ActiveActorDestructible otherActor) {
@@ -126,10 +127,6 @@ public class UserPlane extends FighterPlane {
 	public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
 		updatePosition();
 		checkCollisions(enemyPlanes, enemyProjectiles);
-	}
-
-	public HeartDisplay getHeartDisplay() {
-		return heartDisplay;
 	}
 
 }
