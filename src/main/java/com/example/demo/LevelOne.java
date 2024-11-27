@@ -22,10 +22,10 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		if (canSpawnMoreEnemies()) {
-			if (shouldSpawnEnemy()) {
-				spawnEnemy();
-			}
+		long currentTime = System.currentTimeMillis();
+		if (canSpawnMoreEnemies() && shouldSpawnEnemy(currentTime)) {
+			spawnEnemy();
+			setLastSpawnTime(currentTime);
 		}
 	}
 
@@ -50,8 +50,8 @@ public class LevelOne extends LevelParent {
 		return getCurrentNumberOfEnemies() < GameConstants.TOTAL_ENEMIES;
 	}
 
-	private boolean shouldSpawnEnemy() {
-		return Math.random() < GameConstants.ENEMY_SPAWN_PROBABILITY;
+	private boolean shouldSpawnEnemy(long currentTime) {
+		return (currentTime - getLastSpawnTime()) >= GameConstants.SPAWN_INTERVAL_MS;
 	}
 
 	private void spawnEnemy() {
