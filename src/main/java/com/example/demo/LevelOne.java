@@ -6,15 +6,11 @@ public class LevelOne extends LevelParent {
 		super(GameConstants.BACKGROUND_IMAGE_ONE, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH, heartDisplay);
 	}
 
-	// check again
 	@Override
 	protected void checkIfGameOver() {
-		System.out.println("checkIfGameOver called");
 		if (userIsDestroyed()) {
-			System.out.println("User is destroyed");
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-			System.out.println("User has reached kill target condition met");
 			handleUserReachedKillTarget();
 		}
 	}
@@ -39,13 +35,10 @@ public class LevelOne extends LevelParent {
 	}
 
 	private boolean userHasReachedKillTarget() {
-		System.out.println("Number of kills: " + getUser().getNumberOfKills());
-		System.out.println("Kills required to advance: " + GameConstants.KILLS_TO_ADVANCE);
 		return getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE;
 	}
 
 	private void handleUserReachedKillTarget() {
-		System.out.println("User has reached kill target");
 		goToNextLevel(GameConstants.LEVEL_TWO);
 	}
 
@@ -65,7 +58,6 @@ public class LevelOne extends LevelParent {
 		double initialYPosition = generateRandomYPosition();
 		ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), initialYPosition);
 		addEnemyUnit(newEnemy);
-		System.out.println("Enemy spawned. Current enemy count: " + getCurrentNumberOfEnemies());
 	}
 
 	private double generateRandomYPosition() {
