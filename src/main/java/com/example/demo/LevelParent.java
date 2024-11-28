@@ -260,6 +260,7 @@ public abstract class LevelParent {
 	protected void loseGame() {
 		timeline.stop();
 		levelView.showGameOverImage();
+		getUser().handleGameOver();
 	}
 
 	protected UserPlane getUser() {

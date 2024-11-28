@@ -96,7 +96,8 @@ public class UserPlane extends FighterPlane {
 		try {
 			var resource = getClass().getResource("/com/example/demo/sounds/gameover.wav");
 			if (resource != null) {
-				explosionSound = new AudioClip(resource.toExternalForm());
+				gameOverSound = new AudioClip(resource.toExternalForm());
+				System.out.println("Game over sound loaded successfully.");
 			} else {
 				System.err.println("Sound file not found: /com/example/demo/sounds/gameover.wav");
 			}
@@ -104,7 +105,6 @@ public class UserPlane extends FighterPlane {
 			e.printStackTrace();
 		}
 	}
-
 
 	private boolean isMoving() {
 		return velocityMultiplier != 0;
@@ -142,7 +142,12 @@ public class UserPlane extends FighterPlane {
 	}
 
 	private void handleCollisions() {
+		System.out.println("Collision detected. Removing a heart.");
 		heartDisplay.removeHeart();
+		if (heartDisplay.getRemainingHearts() == 0) {
+			System.out.println("No remaining hearts. Game over.");
+			handleGameOver();
+		}
 	}
 
 	public void checkCollisions(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
@@ -164,6 +169,15 @@ public class UserPlane extends FighterPlane {
 	public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
 		updatePosition();
 		checkCollisions(enemyPlanes, enemyProjectiles);
+	}
+
+	public void handleGameOver() {
+		System.out.println("Game over. Playing game over sound.");
+		if (gameOverSound != null) {
+			gameOverSound.play();
+		} else {
+			System.err.println("Game over sound not loaded.");
+		}
 	}
 
 }
