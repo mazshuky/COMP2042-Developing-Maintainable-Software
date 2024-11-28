@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
 
 public class UserPlane extends FighterPlane {
@@ -14,6 +16,7 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
+	private static final Logger logger = Logger.getLogger(UserPlane.class.getName());
 
 	private int velocityMultiplier;
 	private int numberOfKills;
@@ -72,10 +75,10 @@ public class UserPlane extends FighterPlane {
 			if (resource != null) {
 				shootSound = new AudioClip(resource.toExternalForm());
 			} else {
-				System.err.println("Sound file not found: /com/example/demo/sounds/userplaneshoot.wav");
+				logger.warning("Sound file not found: /com/example/demo/sounds/userplaneshoot.wav");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to load shoot sound", e);
 		}
 	}
 
@@ -85,10 +88,10 @@ public class UserPlane extends FighterPlane {
 			if (resource != null) {
 				explosionSound = new AudioClip(resource.toExternalForm());
 			} else {
-				System.err.println("Sound file not found: /com/example/demo/sounds/enemyplaneexplode.wav");
+				logger.warning("Sound file not found: /com/example/demo/sounds/enemyplaneexplode.wav");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to load explosion sound", e);
 		}
 	}
 
@@ -99,10 +102,10 @@ public class UserPlane extends FighterPlane {
 				gameOverSound = new AudioClip(resource.toExternalForm());
 				System.out.println("Game over sound loaded successfully.");
 			} else {
-				System.err.println("Sound file not found: /com/example/demo/sounds/gameover.wav");
+				logger.warning("Sound file not found: /com/example/demo/sounds/gameover.wav");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to load game over sound", e);
 		}
 	}
 
