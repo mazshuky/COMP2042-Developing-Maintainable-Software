@@ -100,11 +100,12 @@ public abstract class LevelParent {
 	}
 
 	private void initializeBackground(String backgroundImageName) {
-		var resource = getClass().getResource(backgroundImageName);
-		if (backgroundImageName != null && resource != null) {
-			background.setImage(new Image(resource.toExternalForm()));
+		if (backgroundImageName != null) {
+			var resource = getClass().getResource(backgroundImageName);
+			if (resource != null) {
+				background.setImage(new Image(resource.toExternalForm()));
+			}
 		}
-
 		setupBackground();
 	}
 
