@@ -11,6 +11,8 @@ public class LevelView {
 	public static final int WIN_IMAGE_Y_POSITION = GameConstants.WIN_IMAGE_Y_POSITION;
 	public static final int LOSS_SCREEN_X_POSITION = GameConstants.LOSS_SCREEN_X_POSITION;
 	public static final int LOSS_SCREEN_Y_POSITION = GameConstants.LOSS_SCREEN_Y_POSITION;
+	public static final int LOSS_SCREEN_WIDTH = GameConstants.LOSS_SCREEN_WIDTH;
+	public static final int LOSS_SCREEN_HEIGHT = GameConstants.LOSS_SCREEN_HEIGHT;
 
 	private final Group root;
 	private final WinImage winImage;
@@ -27,7 +29,7 @@ public class LevelView {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION);
+		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION, LOSS_SCREEN_WIDTH, LOSS_SCREEN_HEIGHT);
 	}
 
 	// Shows the heart display on the screen
@@ -43,7 +45,9 @@ public class LevelView {
 
 	// Displays the game over image on the screen
 	public void showGameOverImage() {
-		root.getChildren().add(gameOverImage);
+	    if (!root.getChildren().contains(gameOverImage)) {
+	        root.getChildren().add(gameOverImage);
+	    }
 	}
 
 	/**
