@@ -44,7 +44,7 @@ public class Boss extends FighterPlane {
 			setTranslateY(initialTranslateY);
 		}
 	}
-	
+
 	@Override
 	public void updateActor() {
 		updatePosition();
@@ -55,7 +55,7 @@ public class Boss extends FighterPlane {
 	public ActiveActorDestructible fireProjectile() {
 		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
 	}
-	
+
 	@Override
 	public void takeDamage() {
 		if (!isShielded) {
@@ -97,7 +97,7 @@ public class Boss extends FighterPlane {
 	}
 
 	private double getProjectileInitialPosition() {
-		return getLayoutY() + getTranslateY() + IMAGE_HEIGHT / 2 + PROJECTILE_Y_POSITION_OFFSET;
+		return getLayoutY() + getTranslateY() + ((double) IMAGE_HEIGHT / 2) + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
 	private boolean shieldShouldBeActivated() {
