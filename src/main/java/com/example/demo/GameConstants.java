@@ -1,5 +1,10 @@
 package com.example.demo;
 
+/**
+ * The {@code GameConstants} class holds constant values used throughout the game.
+ * These constants define configuration settings such as screen adjustments, time delays,
+ * resource paths, game thresholds, and initial state settings.
+ */
 public class GameConstants {
     public static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
     public static final int MILLISECOND_DELAY = 50;
