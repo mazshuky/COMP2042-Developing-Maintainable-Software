@@ -35,7 +35,6 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> enemyProjectiles;
 
 	private final SimpleIntegerProperty currentNumberOfEnemies;
-	private final ShieldImage shieldImage;
 	private long lastSpawnTime;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, HeartDisplay heartDisplay) {
@@ -46,8 +45,7 @@ public abstract class LevelParent {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
-		this.shieldImage = new ShieldImage(1150, 500);
-		this.user = new UserPlane(playerInitialHealth, heartDisplay, shieldImage);
+		this.user = new UserPlane(playerInitialHealth, heartDisplay);
 		this.background = new ImageView();
 
 		this.friendlyUnits = new ArrayList<>();
@@ -81,7 +79,6 @@ public abstract class LevelParent {
 	}
 
 	public void goToNextLevel(String levelName) {
-		// System.out.println("Transitioning to next level: " + levelName);
 		enemyUnits.clear();
 		root.getChildren().removeIf(node -> node instanceof EnemyPlane);
 		support.firePropertyChange("levelChange", null, levelName);
@@ -170,11 +167,6 @@ public abstract class LevelParent {
 			case UP -> user.moveUp();
 			case DOWN -> user.moveDown();
 			case SPACE -> fireProjectile();
-			// case S -> user.activateShield();
-			case S -> {
-				System.out.println("Activating shield.");
-				user.activateShield();
-			}
 		}
 	}
 

@@ -16,24 +16,18 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
-	private static final int SHIELD_DURATION = 3000;
 	private static final Logger logger = Logger.getLogger(UserPlane.class.getName());
 
 	private int velocityMultiplier;
 	private int numberOfKills;
 	private final HeartDisplay heartDisplay;
-	private boolean shieldActive;
-	private long shieldActivatedTime;
-	private final ShieldImage shieldImage;
 	private AudioClip shootSound;
 	private AudioClip explosionSound;
 	private AudioClip gameOverSound;
 
-	public UserPlane(int initialHealth, HeartDisplay heartDisplay, ShieldImage shieldImage) {
+	public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		this.heartDisplay = heartDisplay;
-		this.shieldImage =  shieldImage;
-		this.shieldActive = false;
 		initUserPlane();
 	}
 
@@ -167,20 +161,9 @@ public class UserPlane extends FighterPlane {
 			}
 		}
 
-		/*for (ActiveActorDestructible projectile : enemyProjectiles) {
-			if (collidesWith(projectile)) {
-				handleCollisions();
-				break;
-			}
-		}*/
-
 		for (ActiveActorDestructible projectile : enemyProjectiles) {
 			if (collidesWith(projectile)) {
-				if (shieldActive) {
-					projectile.takeDamage();
-				} else {
-					handleCollisions();
-				}
+				handleCollisions();
 				break;
 			}
 		}
@@ -188,7 +171,6 @@ public class UserPlane extends FighterPlane {
 
 	public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
 		updatePosition();
-		updateShield();
 		checkCollisions(enemyPlanes, enemyProjectiles);
 	}
 
@@ -201,18 +183,5 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
-	public void activateShield() {
-		System.out.println("Shield activated.");
-		shieldActive = true;
-		shieldActivatedTime = System.currentTimeMillis();
-		shieldImage.showShield();
-	}
-
-	private void updateShield() {
-		if (shieldActive && (System.currentTimeMillis() - shieldActivatedTime >= SHIELD_DURATION)) {
-			shieldActive = false;
-			shieldImage.hideShield();
-		}
-	}
 
 }
