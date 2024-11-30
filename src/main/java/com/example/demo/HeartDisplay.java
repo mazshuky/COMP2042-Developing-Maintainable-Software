@@ -6,7 +6,8 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 
 /**
- * Class representing the heart display in the game
+ * The {@code HeartDisplay} class represents a display of hearts in the game,
+ * used to represent lives or health.
  */
 public class HeartDisplay {
 
@@ -20,11 +21,11 @@ public class HeartDisplay {
 	private final int numberOfHeartsToDisplay;
 
 	/**
-	 * Constructs a new HeartDisplay
+	 * Constructs a new {@code HeartDisplay} with specified coordinates and number of hearts.
 	 *
-	 * @param xPosition        the x position of the heart display
-	 * @param yPosition        the y position of the heart display
-	 * @param heartsToDisplay  the number of hearts to display
+	 * @param xPosition       the x position of the heart display
+	 * @param yPosition       the y position of the heart display
+	 * @param heartsToDisplay the number of hearts to initially display
 	 */
 	public HeartDisplay(double xPosition, double yPosition, int heartsToDisplay) {
 		this.containerXPosition = xPosition;
@@ -36,7 +37,7 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Initializes the container for the heart display
+	 * Initializes the container's position for the heart display
 	 */
 	private void initializeContainer() {
 		container.setLayoutX(containerXPosition);
@@ -44,7 +45,8 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Initializes the hearts to display
+	 * Initializes and adds heart images to the container based on the specified number.
+	 * Throws an {@link IllegalArgumentException} if a heart image resource cannot be found.
 	 */
 	private void initializeHearts() {
 		for (int i = 0; i < numberOfHeartsToDisplay; i++) {
@@ -58,9 +60,9 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Creates an ImageView for the heart image
+	 * Creates an {@link ImageView} for the heart image.
 	 *
-	 * @return   the ImageView for the heart image or null if image is not found
+	 * @return the {@link ImageView} for the heart image or null if the image resource is not found
 	 */
 	private ImageView createHeartImageView() {
 		URL resource = getClass().getResource(HEART_IMAGE_NAME);
@@ -75,7 +77,7 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Removes a heart from the heart display
+	 * Removes a heart from the heart display if no hearts are left, nothing happens.
 	 */
 	public void removeHeart() {
 		if (!container.getChildren().isEmpty()) {
@@ -84,9 +86,18 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Gets the container for the heart display
+	 * Retrieves the number of hearts currently displayed.
 	 *
-	 * @return   the container for the heart display
+	 * @return the number of remaining hearts in the display
+	 */
+	public int getRemainingHearts() {
+		return getContainer().getChildren().size();
+	}
+
+	/**
+	 * Retrieves the container that holds the heart images.
+	 *
+	 * @return the {@link HBox} container for the heart display
 	 */
 	public HBox getContainer() {
 		return container;
