@@ -2,61 +2,53 @@ package com.example.demo;
 
 import javafx.scene.Group;
 
-// Class representing the view of the game level
 public class LevelView {
-	
-	public static final double HEART_DISPLAY_X_POSITION = GameConstants.HEART_DISPLAY_X_POSITION;
-	public static final double HEART_DISPLAY_Y_POSITION = GameConstants.HEART_DISPLAY_Y_POSITION;
-	public static final int WIN_IMAGE_X_POSITION = GameConstants.WIN_IMAGE_X_POSITION;
-	public static final int WIN_IMAGE_Y_POSITION = GameConstants.WIN_IMAGE_Y_POSITION;
-	public static final int LOSS_SCREEN_X_POSITION = GameConstants.LOSS_SCREEN_X_POSITION;
-	public static final int LOSS_SCREEN_Y_POSITION = GameConstants.LOSS_SCREEN_Y_POSITION;
-	public static final int LOSS_SCREEN_WIDTH = GameConstants.LOSS_SCREEN_WIDTH;
-	public static final int LOSS_SCREEN_HEIGHT = GameConstants.LOSS_SCREEN_HEIGHT;
 
 	private final Group root;
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
 
-	/**
-	 * Constructs a new LevelView
-	 *
-	 * @param root              the root group for the scene
-	 * @param heartsToDisplay   the initial number of hearts to display
-	 */
 	public LevelView(Group root, int heartsToDisplay) {
 		this.root = root;
-		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
-		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(LOSS_SCREEN_X_POSITION, LOSS_SCREEN_Y_POSITION, LOSS_SCREEN_WIDTH, LOSS_SCREEN_HEIGHT);
+		this.heartDisplay = setUpHeartDisplay(heartsToDisplay);
+		this.winImage = createWinImage();
+		this.gameOverImage = createGameOverImage();
 	}
 
-	// Shows the heart display on the screen
+	private HeartDisplay setUpHeartDisplay(int heartsToDisplay) {
+		return new HeartDisplay(GameConstants.HEART_DISPLAY_X_POSITION, GameConstants.HEART_DISPLAY_Y_POSITION, heartsToDisplay);
+	}
+
+	private WinImage createWinImage() {
+		return new WinImage(GameConstants.WIN_IMAGE_X_POSITION, GameConstants.WIN_IMAGE_Y_POSITION);
+	}
+
+	private GameOverImage createGameOverImage() {
+		return new GameOverImage(GameConstants.LOSS_SCREEN_X_POSITION, GameConstants.LOSS_SCREEN_Y_POSITION, GameConstants.LOSS_SCREEN_WIDTH, GameConstants.LOSS_SCREEN_HEIGHT);
+	}
+
 	public void showHeartDisplay() {
-		root.getChildren().add(heartDisplay.getContainer());
+		if (!root.getChildren().contains(heartDisplay.getContainer())) {
+			root.getChildren().add(heartDisplay.getContainer());
+		}
 	}
 
-	// Displays the win image on the screen
 	public void showWinImage() {
-		root.getChildren().add(winImage);
-		winImage.showWinImage();
+		if (!root.getChildren().contains(winImage)) {
+			root.getChildren().add(winImage);
+			winImage.showWinImage();
+		}
 	}
 
-	// Displays the game over image on the screen
 	public void showGameOverImage() {
 	    if (!root.getChildren().contains(gameOverImage)) {
 	        root.getChildren().add(gameOverImage);
 	    }
 	}
 
-	/**
-	 * Removes hearts from the heart display based on remaining hearts
-	 *
-	 * @param heartsRemaining   the number of hearts remaining to be displayed
-	 */
 	public void removeHearts(int heartsRemaining) {
-		heartsRemaining = Math.max(heartsRemaining, 0); // Ensure non-negative
+		heartsRemaining = Math.max(heartsRemaining, 0);
 		int currentNumberOfHearts = heartDisplay.getContainer().getChildren().size();
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
 			heartDisplay.removeHeart();
