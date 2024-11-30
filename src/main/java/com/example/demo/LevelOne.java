@@ -10,8 +10,8 @@ public class LevelOne extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
-		} else if (userHasReachedKillTarget()) {
-			handleUserReachedKillTarget();
+		} else if (isKillTargetReached()) {
+			advanceToNextLevel();
 		}
 	}
 
@@ -22,10 +22,9 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		long currentTime = System.currentTimeMillis();
-		if (canSpawnMoreEnemies() && shouldSpawnEnemy(currentTime)) {
-			spawnEnemy();
-			setLastSpawnTime(currentTime);
+		if (canSpawnNewEnemy()) {
+			spawnNewEnemy();
+			updateLastSpawnTime();
 		}
 	}
 
@@ -34,11 +33,11 @@ public class LevelOne extends LevelParent {
 		return new LevelView(getRoot(), GameConstants.PLAYER_INITIAL_HEALTH);
 	}
 
-	private boolean userHasReachedKillTarget() {
+	private boolean isKillTargetReached() {
 		return getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE;
 	}
 
-	private void handleUserReachedKillTarget() {
+	private void advanceToNextLevel() {
 		goToNextLevel(GameConstants.LEVEL_TWO);
 	}
 
@@ -46,15 +45,17 @@ public class LevelOne extends LevelParent {
 		getRoot().getChildren().add(getUser());
 	}
 
-	private boolean canSpawnMoreEnemies() {
-		return getCurrentNumberOfEnemies() < GameConstants.TOTAL_ENEMIES;
+	private boolean canSpawnNewEnemy() {
+		long currentTime = System.currentTimeMillis();
+		return (getCurrentNumberOfEnemies() < GameConstants.TOTAL_ENEMIES) &&
+				(isTimeForNewSpawn(currentTime));
 	}
 
-	private boolean shouldSpawnEnemy(long currentTime) {
+	private boolean isTimeForNewSpawn(long currentTime) {
 		return (currentTime - getLastSpawnTime()) >= GameConstants.SPAWN_INTERVAL_MS;
 	}
 
-	private void spawnEnemy() {
+	private void spawnNewEnemy() {
 		double initialYPosition = generateRandomYPosition();
 		ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), initialYPosition);
 		addEnemyUnit(newEnemy);
@@ -62,6 +63,10 @@ public class LevelOne extends LevelParent {
 
 	private double generateRandomYPosition() {
 		return Math.random() * getEnemyMaximumYPosition();
+	}
+
+	private void updateLastSpawnTime() {
+		setLastSpawnTime(System.currentTimeMillis());
 	}
 
 }
