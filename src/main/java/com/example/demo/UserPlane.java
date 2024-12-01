@@ -140,8 +140,23 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
-	public boolean collidesWith(ActiveActorDestructible otherActor) {
+	/*public boolean collidesWith(ActiveActorDestructible otherActor) {
 		return this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
+	}*/
+
+	/*public boolean collidesWith(ActiveActorDestructible otherActor) {
+		boolean collision = this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
+		System.out.println("Collision check with " + otherActor + ": " + collision);
+		return collision;
+	}*/
+
+	public boolean collidesWith(ActiveActorDestructible otherActor) {
+		System.out.println("UserPlane bounds: " + this.getBoundsInParent());
+		System.out.println("OtherActor bounds: " + otherActor.getBoundsInParent());
+		boolean collision = this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
+
+		System.out.println("Collision result with " + otherActor + ": " + collision);
+		return collision;
 	}
 
 	private void handleCollisions() {
@@ -167,11 +182,22 @@ public class UserPlane extends FighterPlane {
 				break;
 			}
 		}
+
 	}
 
-	public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
+	public void checkProjectileCollisions(List<UserProjectile> userProjectiles, Boss boss) {
+		for (UserProjectile projectile : userProjectiles) {
+			if (boss.collidesWith(projectile)) {
+				System.out.println("Collision detected between UserProjectile and Boss.");
+				boss.takeDamage(); // Ensure boss can take damage
+			}
+		}
+	}
+
+	public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles, List<UserProjectile> userProjectiles, Boss boss) {
 		updatePosition();
 		checkCollisions(enemyPlanes, enemyProjectiles);
+		checkProjectileCollisions(userProjectiles, boss);
 	}
 
 	public void handleGameOver() {
