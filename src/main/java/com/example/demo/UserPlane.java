@@ -29,14 +29,36 @@ public class UserPlane extends FighterPlane {
 	public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		this.heartDisplay = heartDisplay;
-		initUserPlane();
+		//initUserPlane();
+		initializeSounds();
 	}
 
-	private void initUserPlane() {
+	/*private void initUserPlane() {
 		velocityMultiplier = 0;
 		loadShootSound();
 		loadExplosionSound();
 		loadGameOverSound();
+	}*/
+
+	private void initializeSounds() {
+		this.velocityMultiplier = 0;
+		this.shootSound = loadSound("/com/example/demo/sounds/userplaneshoot.wav");
+		this.explosionSound = loadSound("/com/example/demo/sounds/enemyplaneexplode.wav");
+		this.gameOverSound = loadSound("/com/example/demo/sounds/gameover.wav");
+	}
+
+	private AudioClip loadSound(String path) {
+		try {
+			var resource = getClass().getResource(path);
+			if (resource != null) {
+				return new AudioClip(resource.toExternalForm());
+			} else {
+				logger.warning("Sound file not found: " + path);
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Failed to load sound: " + path, e);
+		}
+		return null;
 	}
 
 	@Override
@@ -63,14 +85,25 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		if (shootSound != null) {
+		/*if (shootSound != null) {
 			shootSound.play();
-		}
+		}*/
+		playSound(shootSound);
 		double[] projectilePosition = getProjectilePosition(PROJECTILE_X_POSITION, PROJECTILE_Y_POSITION_OFFSET);
 		return new UserProjectile(projectilePosition[0], projectilePosition[1]);
 	}
 
-	private void loadShootSound() {
+	public void playExplosionSound() {
+		playSound(explosionSound);
+	}
+
+	private void playSound(AudioClip sound) {
+		if (sound != null) {
+			sound.play();
+		}
+	}
+
+	/*private void loadShootSound() {
 		try {
 			var resource = getClass().getResource("/com/example/demo/sounds/userplaneshoot.wav");
 			if (resource != null) {
@@ -108,7 +141,7 @@ public class UserPlane extends FighterPlane {
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Failed to load game over sound", e);
 		}
-	}
+	}*/
 
 	private boolean isMoving() {
 		return velocityMultiplier != 0;
@@ -135,11 +168,11 @@ public class UserPlane extends FighterPlane {
 		System.out.println("Incremented kill count. Current number of kills: " + numberOfKills);
 	}
 
-	public void playExplosionSound() {
+	/*public void playExplosionSound() {
 		if (explosionSound != null) {
 			explosionSound.play();
 		}
-	}
+	}*/
 
 	public boolean collidesWith(ActiveActorDestructible otherActor) {
 		System.out.println("UserPlane bounds: " + this.getBoundsInParent());
@@ -191,13 +224,18 @@ public class UserPlane extends FighterPlane {
 		checkProjectileCollisions(userProjectiles, boss);
 	}
 
-	public void handleGameOver() {
+	/*public void handleGameOver() {
 		System.out.println("Game over. Playing game over sound.");
 		if (gameOverSound != null) {
 			gameOverSound.play();
 		} else {
 			System.err.println("Game over sound not loaded.");
 		}
+	}*/
+
+	public void handleGameOver() {
+		logger.info("Game over. Playing game over sound.");
+		playSound(gameOverSound);
 	}
 
 
