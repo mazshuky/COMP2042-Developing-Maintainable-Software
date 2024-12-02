@@ -21,6 +21,7 @@ public class UserPlane extends FighterPlane {
 	private int velocityMultiplier;
 	private int numberOfKills;
 	private final HeartDisplay heartDisplay;
+
 	private AudioClip shootSound;
 	private AudioClip explosionSound;
 	private AudioClip gameOverSound;
@@ -140,16 +141,6 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
-	/*public boolean collidesWith(ActiveActorDestructible otherActor) {
-		return this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
-	}*/
-
-	/*public boolean collidesWith(ActiveActorDestructible otherActor) {
-		boolean collision = this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
-		System.out.println("Collision check with " + otherActor + ": " + collision);
-		return collision;
-	}*/
-
 	public boolean collidesWith(ActiveActorDestructible otherActor) {
 		System.out.println("UserPlane bounds: " + this.getBoundsInParent());
 		System.out.println("OtherActor bounds: " + otherActor.getBoundsInParent());
@@ -189,7 +180,7 @@ public class UserPlane extends FighterPlane {
 		for (UserProjectile projectile : userProjectiles) {
 			if (boss.collidesWith(projectile)) {
 				System.out.println("Collision detected between UserProjectile and Boss.");
-				boss.takeDamage(); // Ensure boss can take damage
+				boss.takeDamage();
 			}
 		}
 	}
