@@ -66,6 +66,10 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 		};
 	}
 
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
 	/**
 	 * Returns the current health of the fighter plane.
 	 *
@@ -74,5 +78,6 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	public int getHealth() {
 		return health;
 	}
+
 		
 }
