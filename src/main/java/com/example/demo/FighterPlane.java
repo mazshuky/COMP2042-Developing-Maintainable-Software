@@ -66,6 +66,11 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 		};
 	}
 
+	/**
+	 * Sets a new health value for the object.
+	 *
+	 * @param health the new health value to be assigned
+	 */
 	public void setHealth(int health) {
 		this.health = health;
 	}
