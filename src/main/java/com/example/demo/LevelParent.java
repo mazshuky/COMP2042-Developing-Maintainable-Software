@@ -15,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 
+import com.example.demo.controller.Controller;
+
 public abstract class LevelParent {
 
 	private final double screenHeight;
@@ -28,6 +30,7 @@ public abstract class LevelParent {
 	private final ImageView background;
 	private final LevelView levelView;
 	private final PropertyChangeSupport support;
+	private final Controller controller;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -37,9 +40,10 @@ public abstract class LevelParent {
 	private final SimpleIntegerProperty currentNumberOfEnemies;
 	private long lastSpawnTime;
 
-	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, HeartDisplay heartDisplay) {
+	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth, HeartDisplay heartDisplay, Controller controller) {
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
+		this.controller = controller;
 		this.enemyMaximumYPosition = screenHeight - GameConstants.SCREEN_HEIGHT_ADJUSTMENT;
 
 		this.root = new Group();
@@ -115,6 +119,7 @@ public abstract class LevelParent {
 		background.setOnKeyPressed(e -> handleKeyPress(e.getCode()));
 		background.setOnKeyReleased(e -> handleKeyRelease(e.getCode()));
 		root.getChildren().add(background);
+		howToPlay();
 	}
 
 	private void updateScene() {
@@ -255,12 +260,40 @@ public abstract class LevelParent {
 	protected void winGame() {
 		timeline.stop();
 		levelView.showWinImage();
+		getUser().handleWin(levelView.getWinImage());
 	}
 
 	protected void loseGame() {
 		timeline.stop();
 		levelView.showGameOverImage();
 		getUser().handleGameOver();
+	}
+
+	private void howToPlay() {
+		var resource = getClass().getResource(GameConstants.GAME_TUTORIAL);
+		if (resource != null) {
+			ImageView tutorialImage = new ImageView(new Image(resource.toExternalForm()));
+			tutorialImage.setFitWidth(50);
+			tutorialImage.setFitHeight(50);
+			tutorialImage.setLayoutX(screenWidth - 110);
+			tutorialImage.setLayoutY(screenHeight - 110);
+			tutorialImage.setOnMouseClicked(event -> showTutorial());
+			root.getChildren().add(tutorialImage);
+		}
+	}
+
+	private void showTutorial() {
+		System.out.println("Tutorial clicked! Show the tutorial here.");
+		GameTutorial tutorialScreen = new GameTutorial(controller);
+		tutorialScreen.showTutorial();
+	}
+
+	public void pause() {
+		timeline.pause();
+	}
+
+	public void resume() {
+		timeline.play();
 	}
 
 	protected UserPlane getUser() {

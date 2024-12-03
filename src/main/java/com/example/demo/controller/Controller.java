@@ -18,10 +18,12 @@ public class Controller implements PropertyChangeListener {
 	private final Stage stage;
 	private final HeartDisplay heartDisplay;
 	private LevelParent currentLevel;
+	private boolean isPaused;
 
 	public Controller(Stage stage) {
 		this.stage = stage;
 		this.heartDisplay = new HeartDisplay(stage.getHeight(), stage.getWidth(), 5);
+		this.isPaused = false;
 	}
 
 	public void launchGame(Stage stage) throws CustomException {
@@ -51,10 +53,9 @@ public class Controller implements PropertyChangeListener {
 	private LevelParent createLevelInstance(String className) {
 		switch (className) {
 			case "com.example.demo.LevelOne":
-				return new LevelOne(stage.getHeight(), stage.getWidth(), heartDisplay);
+				return new LevelOne(stage.getHeight(), stage.getWidth(), heartDisplay, this);
 			case "com.example.demo.LevelTwo":
-				return new LevelTwo(stage.getHeight(), stage.getWidth(), heartDisplay);
-			// Add more levels as necessary
+				return new LevelTwo(stage.getHeight(), stage.getWidth(), heartDisplay, this);
 			default:
 				throw new IllegalArgumentException("Unknown level class: " + className);
 		}
@@ -91,6 +92,24 @@ public class Controller implements PropertyChangeListener {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setContentText("Error changing to level: " + newLevel + "\n" + e.getMessage());
 		alert.show();
+	}
+
+	public void pauseGame() {
+		if (!isPaused && currentLevel != null) {
+			currentLevel.pause();
+			isPaused = true;
+		}
+	}
+
+	public void resumeGame() {
+		if (isPaused) {
+			currentLevel.resume();
+			isPaused = false;
+		}
+	}
+
+	public boolean isPaused() {
+		return isPaused;
 	}
 
 }
