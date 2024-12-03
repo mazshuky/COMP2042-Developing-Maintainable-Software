@@ -6,8 +6,8 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 
 /**
- * The {@code HeartDisplay} class represents a display of hearts in the game,
- * used to represent lives or health.
+ * The {@code HeartDisplay} class represents a display of hearts in the game
+ * to represent lives or health.
  */
 public class HeartDisplay {
 
@@ -37,7 +37,7 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Initializes the container's position for the heart display
+	 * Initializes the container's position for the heart display.
 	 */
 	private void initializeContainer() {
 		container.setLayoutX(containerXPosition);
@@ -77,7 +77,7 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Removes a heart from the heart display if no hearts are left, nothing happens.
+	 * Removes a heart if no hearts are left, nothing happens.
 	 */
 	public void removeHeart() {
 		if (!container.getChildren().isEmpty()) {
@@ -86,12 +86,18 @@ public class HeartDisplay {
 	}
 
 	/**
-	 * Retrieves the number of hearts currently displayed.
+	 * Updates the heart based on the current health.
 	 *
-	 * @return the number of remaining hearts in the display
+	 * @param health The current health value.
 	 */
-	public int getRemainingHearts() {
-		return getContainer().getChildren().size();
+	public void update(int health) {
+		container.getChildren().clear();
+		for (int i = 0; i < health; i++) {
+			ImageView heart = createHeartImageView();
+			if (heart != null) {
+				container.getChildren().add(heart);
+			}
+		}
 	}
 
 	/**
