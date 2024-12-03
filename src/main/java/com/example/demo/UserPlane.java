@@ -239,6 +239,7 @@ public void checkCollisions(List<? extends ActiveActorDestructible> enemyPlanes,
  * @param userProjectiles The list of projectiles fired by the UserPlane.
  * @param boss The Boss object to check collisions with.
  */
+/*
 public void checkProjectileCollisions(List<UserProjectile> userProjectiles, Boss boss) {
 		for (UserProjectile projectile : userProjectiles) {
 			if (boss.collidesWith(projectile)) {
@@ -247,6 +248,7 @@ public void checkProjectileCollisions(List<UserProjectile> userProjectiles, Boss
 			}
 		}
 	}
+	*/
 
 /**
  * Main function to update the game's state, checking user interactions,
@@ -259,8 +261,8 @@ public void checkProjectileCollisions(List<UserProjectile> userProjectiles, Boss
  */
 public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles, List<UserProjectile> userProjectiles, Boss boss) {
 		updatePosition();
-		checkCollisions(enemyPlanes, enemyProjectiles);
-		checkProjectileCollisions(userProjectiles, boss);
+		//checkCollisions(enemyPlanes, enemyProjectiles);
+		//checkProjectileCollisions(userProjectiles, boss);
 	}
 
 /**

@@ -126,7 +126,7 @@ public abstract class LevelParent {
 		removeAllDestroyedActors();
 		updateLevelView();
 		checkIfGameOver();
-		user.updateGame(enemyUnits, enemyProjectiles);
+		//user.updateGame(enemyUnits, enemyProjectiles);
 	}
 
 	private void updateActors() {
