@@ -5,20 +5,20 @@ import java.util.*;
 public class Boss extends FighterPlane {
 
 	private static final String IMAGE_NAME = "bossplane.png";
-	private static final double INITIAL_X_POSITION = 1000.0;
-	private static final double INITIAL_Y_POSITION = 400;
+	private static final double INITIAL_X_POSITION = 1120.0;
+	private static final double INITIAL_Y_POSITION = 450;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 0.0;
 	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = 0;
+	private static final double BOSS_SHIELD_PROBABILITY = 0.05;
 	private static final int IMAGE_HEIGHT = 170;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 10;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int Y_POSITION_UPPER_BOUND = -100;
+	private static final int Y_POSITION_UPPER_BOUND = -30;
 	private static final int Y_POSITION_LOWER_BOUND = 475;
-	private static final int MAX_FRAMES_WITH_SHIELD = 500;
+	private static final int MAX_FRAMES_WITH_SHIELD = 50;
 
 	private final List<Integer> movePattern;
 	private boolean isShielded;
@@ -42,6 +42,7 @@ public class Boss extends FighterPlane {
 		moveVertically(getNextMove());
 		if (isOutOfBounds()) {
 			setTranslateY(initialTranslateY);
+			resetMovePattern();
 		}
 	}
 
