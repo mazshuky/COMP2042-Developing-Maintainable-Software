@@ -19,8 +19,8 @@ public class GameConstants {
     public static final double HEART_DISPLAY_Y_POSITION = 10;
     public static final int WIN_IMAGE_X_POSITION = 355;
     public static final int WIN_IMAGE_Y_POSITION = 175;
-    public static final int LOSS_SCREEN_X_POSITION = 200;
-    public static final int LOSS_SCREEN_Y_POSITION = -50;
-    public static final int LOSS_SCREEN_WIDTH = 800;
-    public static final int LOSS_SCREEN_HEIGHT = 800;
+    public static final int LOSS_SCREEN_X_POSITION = 450;
+    public static final int LOSS_SCREEN_Y_POSITION = 150;
+    public static final int LOSS_SCREEN_WIDTH = 400;
+    public static final int LOSS_SCREEN_HEIGHT = 400;
 }
