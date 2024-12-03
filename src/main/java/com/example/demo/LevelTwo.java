@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.controller.Controller;
+
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_TWO = "/com/example/demo/images/background2.jpg";
@@ -7,8 +9,8 @@ public class LevelTwo extends LevelParent {
 	private final Boss boss;
 	private final LevelViewLevelTwo levelView;
 
-	public LevelTwo(double screenHeight, double screenWidth, HeartDisplay heartDisplay) {
-		super(BACKGROUND_IMAGE_TWO, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, heartDisplay);
+	public LevelTwo(double screenHeight, double screenWidth, HeartDisplay heartDisplay, Controller controller) {
+		super(BACKGROUND_IMAGE_TWO, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, heartDisplay, controller);
 		this.boss = initializeBoss();
 		this.levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
 		bindShieldToBoss();
@@ -59,9 +61,13 @@ public class LevelTwo extends LevelParent {
 	}
 
 	private void bindShieldToBoss() {
-		levelView.getShieldImage().translateXProperty().bind(boss.translateXProperty());
-		levelView.getShieldImage().translateYProperty().bind(boss.translateYProperty());
+		double xOffset = 600;
+		double yOffset = -40;
+
+		levelView.getShieldImage().translateXProperty().bind(boss.translateXProperty().add(xOffset));
+		levelView.getShieldImage().translateYProperty().bind(boss.translateYProperty().add(yOffset));
 	}
+
 
 	private Boss initializeBoss() {
 		return new Boss();
