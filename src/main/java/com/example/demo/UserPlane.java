@@ -5,8 +5,8 @@ import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
 
 /**
- * Represents a user's fighter plane in the game. The UserPlane handles its own movement,
- * interaction with enemies, projectiles, and the situation when the game is over.
+ * Represents the user plane in the game. The UserPlane handles its own movement,
+ * interaction with enemies, projectiles, and the situation when the game wins or loses.
  */
 public class UserPlane extends FighterPlane {
 
@@ -28,6 +28,7 @@ public class UserPlane extends FighterPlane {
 	private AudioClip shootSound;
 	private AudioClip explosionSound;
 	private AudioClip gameOverSound;
+	private AudioClip youWinSound;
 
 	/**
 	 * Constructs a UserPlane with specified initial health and heart display.
@@ -42,13 +43,14 @@ public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 	}
 
 /**
- * Initializes the audio clips used for various actions like shooting and explosions.
+ * Initializes the audio clips used for various actions in the game.
  */
 private void initializeSounds() {
 		this.velocityMultiplier = 0;
 		this.shootSound = loadSound("/com/example/demo/sounds/userplaneshoot.wav");
 		this.explosionSound = loadSound("/com/example/demo/sounds/enemyplaneexplode.wav");
 		this.gameOverSound = loadSound("/com/example/demo/sounds/gameover.wav");
+		this.youWinSound = loadSound("/com/example/demo/sounds/youwin.wav");
 	}
 
 /**
@@ -118,7 +120,7 @@ public ActiveActorDestructible fireProjectile() {
 	}
 
 /**
- * Plays the sound effect associated with an explosion.
+ * Plays the sound effect when the enemy plane is destroyed.
  */
 public void playExplosionSound() {
 		playSound(explosionSound);
@@ -199,6 +201,17 @@ public void incrementKillCount() {
 public void handleGameOver() {
 		logger.info("Game over. Playing game over sound.");
 		playSound(gameOverSound);
+	}
+
+	/**
+	 * Handles the event when the player wins, playing a sound and showing the win image.
+	 *
+	 * @param winImage Display the winImage object
+	 */
+	public void handleWin(WinImage winImage) {
+		logger.info("You win! Playing win sound.");
+		playSound(youWinSound);
+		winImage.showWinImage();
 	}
 
 }
