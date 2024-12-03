@@ -94,4 +94,8 @@ public class LevelView {
 		}
 	}
 
+	public WinImage getWinImage() {
+		return winImage;
+	}
+
 }
