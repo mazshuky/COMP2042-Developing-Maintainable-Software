@@ -10,6 +10,7 @@ public class GameConstants {
     public static final int MILLISECOND_DELAY = 50;
     public static final String BACKGROUND_IMAGE_ONE = "/com/example/demo/images/background1.jpg";
     public static final String LEVEL_TWO = "com.example.demo.LevelTwo";
+    public static final String GAME_TUTORIAL = "/com/example/demo/images/howtoplay.png";
     public static final int TOTAL_ENEMIES = 10;
     public static final int KILLS_TO_ADVANCE = 5;
     public static final int SPAWN_INTERVAL_MS = 1000;
