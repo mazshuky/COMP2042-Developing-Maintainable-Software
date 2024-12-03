@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
@@ -30,12 +29,12 @@ public class UserPlane extends FighterPlane {
 	private AudioClip explosionSound;
 	private AudioClip gameOverSound;
 
-/**
- * Constructs a UserPlane with specified initial health and heart display.
- *
- * @param initialHealth The initial health of the plane.
- * @param heartDisplay The HeartDisplay object used to display health status.
- */
+	/**
+	 * Constructs a UserPlane with specified initial health and heart display.
+	 *
+	 * @param initialHealth The initial health of the plane.
+	 * @param heartDisplay The HeartDisplay object used to display health status.
+	 */
 public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		this.heartDisplay = heartDisplay;
@@ -183,86 +182,15 @@ public void incrementKillCount() {
 		System.out.println("Incremented kill count. Current number of kills: " + numberOfKills);
 	}
 
-/**
- * Checks for a collision between the UserPlane and another destructible actor.
- *
- * @param otherActor The other destructible actor to check collision with.
- * @return true if there is a collision; otherwise false.
- */
-public boolean collidesWith(ActiveActorDestructible otherActor) {
-		System.out.println("UserPlane bounds: " + this.getBoundsInParent());
-		System.out.println("OtherActor bounds: " + otherActor.getBoundsInParent());
-		boolean collision = this.getBoundsInParent().intersects(otherActor.getBoundsInParent());
-
-		System.out.println("Collision result with " + otherActor + ": " + collision);
-		return collision;
-	}
-
-/**
- * Handles the actions to take when a collision is detected, including reducing health and checking for game over.
- */
-private void handleCollisions() {
-		System.out.println("Collision detected. Removing a heart.");
-		heartDisplay.removeHeart();
-		if (heartDisplay.getRemainingHearts() == 0) {
-			System.out.println("No remaining hearts. Game over.");
-			handleGameOver();
-		}
-	}
-
-/**
- * Checks the UserPlane's collisions with enemy planes and projectiles, updating the game state accordingly.
- *
- * @param enemyPlanes The list of enemy planes to check collisions against.
- * @param enemyProjectiles The list of enemy projectiles to check collisions against.
- */
-public void checkCollisions(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles) {
-		for (ActiveActorDestructible enemy : enemyPlanes) {
-			if (collidesWith(enemy)) {
-				handleCollisions();
-				break;
-			}
-		}
-
-		for (ActiveActorDestructible projectile : enemyProjectiles) {
-			if (collidesWith(projectile)) {
-				handleCollisions();
-				break;
-			}
-		}
-
-	}
-
-/**
- * Checks for collisions between UserProjectiles and the Boss.
- *
- * @param userProjectiles The list of projectiles fired by the UserPlane.
- * @param boss The Boss object to check collisions with.
- */
-/*
-public void checkProjectileCollisions(List<UserProjectile> userProjectiles, Boss boss) {
-		for (UserProjectile projectile : userProjectiles) {
-			if (boss.collidesWith(projectile)) {
-				System.out.println("Collision detected between UserProjectile and Boss.");
-				boss.takeDamage();
-			}
-		}
-	}
-	*/
-
-/**
- * Main function to update the game's state, checking user interactions,
- * collisions, and updating game components.
- *
- * @param enemyPlanes The list of enemy planes currently in the game.
- * @param enemyProjectiles The projectiles fired at the UserPlane.
- * @param userProjectiles The UserPlane's projectiles.
- * @param boss The Boss to interact with during the game.
- */
-public void updateGame(List<? extends ActiveActorDestructible> enemyPlanes, List<? extends ActiveActorDestructible> enemyProjectiles, List<UserProjectile> userProjectiles, Boss boss) {
-		updatePosition();
-		//checkCollisions(enemyPlanes, enemyProjectiles);
-		//checkProjectileCollisions(userProjectiles, boss);
+	/**
+	 * Sets the health of the UserPlane and updates the heart display.
+	 *
+	 * @param health The new health value.
+	 */
+	@Override
+	public void setHealth(int health) {
+		super.setHealth(health);
+		heartDisplay.update(health);
 	}
 
 /**
