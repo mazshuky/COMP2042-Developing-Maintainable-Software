@@ -5,10 +5,13 @@ public class LevelTwo extends LevelParent {
 	private static final String BACKGROUND_IMAGE_TWO = "/com/example/demo/images/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 	private final Boss boss;
+	private final LevelViewLevelTwo levelView;
 
 	public LevelTwo(double screenHeight, double screenWidth, HeartDisplay heartDisplay) {
 		super(BACKGROUND_IMAGE_TWO, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, heartDisplay);
 		this.boss = initializeBoss();
+		this.levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH);
+		bindShieldToBoss();
 	}
 
 	@Override
@@ -44,6 +47,22 @@ public class LevelTwo extends LevelParent {
 		startTimeline();
 	}
 
+	@Override
+	protected void updateLevelView() {
+		super.updateLevelView();
+		if (boss.isShielded()) {
+			levelView.getShieldImage().showShield();
+		} else {
+			levelView.getShieldImage().hideShield();
+		}
+		levelView.updateBossHealth(boss.getHealth() / 10.0);
+	}
+
+	private void bindShieldToBoss() {
+		levelView.getShieldImage().translateXProperty().bind(boss.translateXProperty());
+		levelView.getShieldImage().translateYProperty().bind(boss.translateYProperty());
+	}
+
 	private Boss initializeBoss() {
 		return new Boss();
 	}
@@ -68,3 +87,4 @@ public class LevelTwo extends LevelParent {
 		getTimeline().play();
 	}
 }
+
