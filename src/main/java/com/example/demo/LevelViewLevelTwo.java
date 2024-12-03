@@ -21,7 +21,6 @@ public class LevelViewLevelTwo extends LevelView {
 	private void addImagesToRoot() {
 		root.getChildren().addAll(shieldImage);
 		root.getChildren().addAll(bossHealthBar.getBossHealthBar());
-		//root.getChildren().addAll(bossHealthBar.getBossHealthBar(), bossHealthBar.getBossHealthLabel());
 	}
 
 	public void updateBossHealth(double health) {
