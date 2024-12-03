@@ -126,7 +126,6 @@ public abstract class LevelParent {
 		removeAllDestroyedActors();
 		updateLevelView();
 		checkIfGameOver();
-		//user.updateGame(enemyUnits, enemyProjectiles);
 	}
 
 	private void updateActors() {
@@ -241,7 +240,7 @@ public abstract class LevelParent {
 		}
 	}
 
-	private void updateLevelView() {
+	protected void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
 	}
 
