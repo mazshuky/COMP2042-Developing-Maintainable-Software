@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.controller.Controller;
+
 
 /**
  * The {@code LevelOne} class represents the first level of the game.
@@ -17,8 +19,9 @@ public class LevelOne extends LevelParent {
 	 * @param screenWidth The width of the game screen.
 	 * @param heartDisplay The {@link HeartDisplay} component to show player lives.
 	 */
-	public LevelOne(double screenHeight, double screenWidth, HeartDisplay heartDisplay) {
-		super(GameConstants.BACKGROUND_IMAGE_ONE, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH, heartDisplay);
+	public LevelOne(double screenHeight, double screenWidth, HeartDisplay heartDisplay, Controller controller) {
+		super(GameConstants.BACKGROUND_IMAGE_ONE, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH, heartDisplay, controller);
+
 	}
 
 	/**
