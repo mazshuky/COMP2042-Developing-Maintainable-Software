@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.media.AudioClip;
+
 public class EnemyPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "enemyplane.png";
@@ -9,9 +13,37 @@ public class EnemyPlane extends FighterPlane {
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 25.0;
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
+	private static final Logger logger = Logger.getLogger(EnemyPlane.class.getName());
+
+	private AudioClip explosionSound;
 
 	public EnemyPlane(double initialXPos, double initialYPos) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
+		initializeSounds();
+	}
+
+	private void initializeSounds() {
+		this.explosionSound = loadSound("/com/example/demo/sounds/enemyplaneexplode.wav");
+	}
+
+	private AudioClip loadSound(String path) {
+		try {
+			var resource = getClass().getResource(path);
+			if (resource != null) {
+				return new AudioClip(resource.toExternalForm());
+			} else {
+				logger.warning("Sound file not found: " + path);
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Failed to load sound: " + path, e);
+		}
+		return null;
+	}
+
+	private void playSound(AudioClip sound) {
+		if (sound != null) {
+			sound.play();
+		}
 	}
 
 	@Override
@@ -34,5 +66,10 @@ public class EnemyPlane extends FighterPlane {
 	public void updateActor() {
 		updatePosition();
 	}
+
+	public void playExplosionSound() {
+		playSound(explosionSound);
+	}
+
 
 }

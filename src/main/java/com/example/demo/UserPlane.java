@@ -26,7 +26,7 @@ public class UserPlane extends FighterPlane {
 	private final HeartDisplay heartDisplay;
 
 	private AudioClip shootSound;
-	private AudioClip explosionSound;
+	//private AudioClip explosionSound;
 	private AudioClip gameOverSound;
 	private AudioClip youWinSound;
 
@@ -48,7 +48,7 @@ public UserPlane(int initialHealth, HeartDisplay heartDisplay) {
 private void initializeSounds() {
 		this.velocityMultiplier = 0;
 		this.shootSound = loadSound("/com/example/demo/sounds/userplaneshoot.wav");
-		this.explosionSound = loadSound("/com/example/demo/sounds/enemyplaneexplode.wav");
+		//this.explosionSound = loadSound("/com/example/demo/sounds/enemyplaneexplode.wav");
 		this.gameOverSound = loadSound("/com/example/demo/sounds/gameover.wav");
 		this.youWinSound = loadSound("/com/example/demo/sounds/youwin.wav");
 	}
@@ -122,9 +122,9 @@ public ActiveActorDestructible fireProjectile() {
 /**
  * Plays the sound effect when the enemy plane is destroyed.
  */
-public void playExplosionSound() {
+/*public void playExplosionSound() {
 		playSound(explosionSound);
-	}
+	}*/
 
 /**
  * Plays a specified sound effect if it is not null.
