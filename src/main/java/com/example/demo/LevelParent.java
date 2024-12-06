@@ -160,7 +160,7 @@ public abstract class LevelParent {
 	}
 
 	protected void checkIfGameOver() {
-        if (getUser().isDestroyed() || getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
+        if (getUser().isDestroyed() || getUser().getNumberOfKills() >= GameConstants.KILLS_TO_LEVEL_TWO) {
             goToNextLevel(GameConstants.LEVEL_TWO);
         }
 	}
@@ -170,12 +170,16 @@ public abstract class LevelParent {
 		switch (keyCode) {
 			case UP -> user.moveUp();
 			case DOWN -> user.moveDown();
+			case LEFT -> user.moveLeft();
+			case RIGHT -> user.moveRight();
 			case SPACE -> fireProjectile();
 		}
 	}
 
 	private void handleKeyRelease(KeyCode keyCode) {
-		if (keyCode == KeyCode.UP || keyCode == KeyCode.DOWN) user.stop();
+		switch (keyCode) {
+			case UP, DOWN, LEFT, RIGHT -> user.stop();
+		}
 	}
 
 	private void fireProjectile() {
@@ -196,6 +200,12 @@ public abstract class LevelParent {
 				if (actor1.getBoundsInParent().intersects(actor2.getBoundsInParent())) {
 					actor1.takeDamage();
 					actor2.takeDamage();
+
+					if (actor1 instanceof UserPlane) {
+						((UserPlane) actor1).handleHit();
+					} else if (actor2 instanceof UserPlane) {
+						((UserPlane) actor2).handleHit();
+					}
 				}
 			}
 		}
@@ -221,10 +231,11 @@ public abstract class LevelParent {
 		root.getChildren().removeAll(destroyedActors);
 
 		if (actors == enemyUnits) {
-			int numberOfDestroyedEnemies = destroyedActors.size();
-			for (int i = 0; i < numberOfDestroyedEnemies; i++) {
+			for (ActiveActorDestructible destroyedActor : destroyedActors) {
 				getUser().incrementKillCount();
-				getUser().playExplosionSound();
+				if (destroyedActor instanceof EnemyPlane) {
+					((EnemyPlane) destroyedActor).playExplosionSound();
+				}
 			}
 		}
 		actors.removeAll(destroyedActors);
@@ -237,7 +248,7 @@ public abstract class LevelParent {
 		for (int i = 0; i < kills; i++) {
 			getUser().incrementKillCount();
 			System.out.println("Kill count: " + getUser().getNumberOfKills());
-			if (getUser().getNumberOfKills() >= GameConstants.KILLS_TO_ADVANCE) {
+			if (getUser().getNumberOfKills() >= GameConstants.KILLS_TO_LEVEL_TWO) {
 				System.out.println("Advancing to the next level");
 				goToNextLevel(GameConstants.LEVEL_TWO);
 				break;
