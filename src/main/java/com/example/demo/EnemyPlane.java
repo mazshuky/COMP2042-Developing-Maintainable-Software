@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
 
 public class EnemyPlane extends FighterPlane {
@@ -13,7 +11,6 @@ public class EnemyPlane extends FighterPlane {
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 25.0;
 	private static final int INITIAL_HEALTH = 1;
 	private static final double FIRE_RATE = .01;
-	private static final Logger logger = Logger.getLogger(EnemyPlane.class.getName());
 
 	private AudioClip explosionSound;
 
@@ -23,21 +20,7 @@ public class EnemyPlane extends FighterPlane {
 	}
 
 	private void initializeSounds() {
-		this.explosionSound = loadSound("/com/example/demo/sounds/enemyplaneexplode.wav");
-	}
-
-	private AudioClip loadSound(String path) {
-		try {
-			var resource = getClass().getResource(path);
-			if (resource != null) {
-				return new AudioClip(resource.toExternalForm());
-			} else {
-				logger.warning("Sound file not found: " + path);
-			}
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Failed to load sound: " + path, e);
-		}
-		return null;
+		this.explosionSound = SoundEffects.loadSound("/com/example/demo/sounds/enemyplaneexplode.wav", this.getClass());
 	}
 
 	private void playSound(AudioClip sound) {
@@ -70,6 +53,5 @@ public class EnemyPlane extends FighterPlane {
 	public void playExplosionSound() {
 		playSound(explosionSound);
 	}
-
 
 }
