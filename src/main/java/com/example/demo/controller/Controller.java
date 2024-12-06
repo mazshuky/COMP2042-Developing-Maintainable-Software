@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import com.example.demo.HeartDisplay;
 import com.example.demo.LevelOne;
 import com.example.demo.LevelTwo;
+import com.example.demo.LevelThree;
 
 public class Controller implements PropertyChangeListener {
 
@@ -54,6 +55,7 @@ public class Controller implements PropertyChangeListener {
 		return switch (className) {
 			case "com.example.demo.LevelOne" -> new LevelOne(stage.getHeight(), stage.getWidth(), heartDisplay, this);
 			case "com.example.demo.LevelTwo" -> new LevelTwo(stage.getHeight(), stage.getWidth(), heartDisplay, this);
+			case "com.example.demo.LevelThree" -> new LevelThree(stage.getHeight(), stage.getWidth(), heartDisplay, this);
 			default -> throw new IllegalArgumentException("Unknown level class: " + className);
 		};
 	}
