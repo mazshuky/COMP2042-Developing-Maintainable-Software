@@ -68,7 +68,6 @@ public class LevelTwo extends LevelParent {
 		levelView.getShieldImage().translateYProperty().bind(boss.translateYProperty().add(yOffset));
 	}
 
-
 	private Boss initializeBoss() {
 		return new Boss();
 	}
