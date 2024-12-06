@@ -51,14 +51,11 @@ public class Controller implements PropertyChangeListener {
 	}
 
 	private LevelParent createLevelInstance(String className) {
-		switch (className) {
-			case "com.example.demo.LevelOne":
-				return new LevelOne(stage.getHeight(), stage.getWidth(), heartDisplay, this);
-			case "com.example.demo.LevelTwo":
-				return new LevelTwo(stage.getHeight(), stage.getWidth(), heartDisplay, this);
-			default:
-				throw new IllegalArgumentException("Unknown level class: " + className);
-		}
+		return switch (className) {
+			case "com.example.demo.LevelOne" -> new LevelOne(stage.getHeight(), stage.getWidth(), heartDisplay, this);
+			case "com.example.demo.LevelTwo" -> new LevelTwo(stage.getHeight(), stage.getWidth(), heartDisplay, this);
+			default -> throw new IllegalArgumentException("Unknown level class: " + className);
+		};
 	}
 
 	private void setupScene(LevelParent myLevel) {
@@ -106,10 +103,6 @@ public class Controller implements PropertyChangeListener {
 			currentLevel.resume();
 			isPaused = false;
 		}
-	}
-
-	public boolean isPaused() {
-		return isPaused;
 	}
 
 }
