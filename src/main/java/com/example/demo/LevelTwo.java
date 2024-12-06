@@ -27,8 +27,12 @@ public class LevelTwo extends LevelParent {
 			loseGame();
 		}
 		else if (boss.isDestroyed()) {
-			winGame();
+			advanceToLevelThree();
 		}
+	}
+
+	private void advanceToLevelThree() {
+		goToNextLevel(GameConstants.LEVEL_THREE);
 	}
 
 	@Override
