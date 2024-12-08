@@ -9,6 +9,9 @@ public class GameConstants {
     public static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
     public static final int MILLISECOND_DELAY = 50;
     public static final String BACKGROUND_IMAGE_ONE = "/com/example/demo/images/background1.jpg";
+    public static final String BACKGROUND_IMAGE_TWO = "/com/example/demo/images/background2.jpg";
+    public static final String BACKGROUND_IMAGE_THREE = "/com/example/demo/images/background3.jpg";
+    public static final String LEVEL_ONE = "com.example.demo.LevelOne";
     public static final String LEVEL_TWO = "com.example.demo.LevelTwo";
     public static final String LEVEL_THREE = "com.example.demo.LevelThree";
     public static final String GAME_TUTORIAL = "/com/example/demo/images/howtoplay.png";
