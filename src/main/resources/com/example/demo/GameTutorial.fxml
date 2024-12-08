@@ -9,8 +9,7 @@
     <Label text="Use the UP arrow key to move up of the plane." style="-fx-font-size: 15px;" />
     <Label text="Use the DOWN arrow key to move down of the plane." style="-fx-font-size: 15px;" />
     <Label text="Press SPACE key to fire a projectile." style="-fx-font-size: 15px;" />
-    <Label text="Kill 5 enemy planes to advance to next level." style="-fx-font-size: 15px;" />
-    <Label text="Kill boss plane in Level 2 to win the game. " style="-fx-font-size: 15px;" />
-    <Label text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" style="-fx-font-size: 15px;" />
-    <Label text="Good luck!" style="-fx-font-size: 15px;" />
+    <Label text="Kill 5 enemy planes to advance to Level 2." style="-fx-font-size: 15px;" />
+    <Label text="Kill boss plane in Level 2 to advance to Level 3. " style="-fx-font-size: 15px;" />
+    <Label text="Kill boss plane and avoid bomb in Level 3 to win game." style="-fx-font-size: 15px;" />
 </VBox>
