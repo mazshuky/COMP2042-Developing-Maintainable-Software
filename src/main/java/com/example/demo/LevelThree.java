@@ -68,7 +68,6 @@ public class LevelThree extends LevelParent {
         levelView.getShieldImage().translateYProperty().bind(boss.translateYProperty().add(yOffset));
     }
 
-
     private Boss initializeBoss() {
         return new Boss();
     }
@@ -92,5 +91,5 @@ public class LevelThree extends LevelParent {
     private void startTimeline() {
         getTimeline().play();
     }
-}
 
+}

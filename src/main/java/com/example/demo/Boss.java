@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.*;
+import javafx.scene.media.AudioClip;
 
 public class Boss extends FighterPlane {
 
@@ -16,7 +17,7 @@ public class Boss extends FighterPlane {
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int Y_POSITION_UPPER_BOUND = -30;
+	private static final int Y_POSITION_UPPER_BOUND = -15;
 	private static final int Y_POSITION_LOWER_BOUND = 475;
 	private static final int MAX_FRAMES_WITH_SHIELD = 50;
 
@@ -26,6 +27,8 @@ public class Boss extends FighterPlane {
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
 
+	private AudioClip fireballSound;
+
 	public Boss() {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
 		movePattern = new ArrayList<>();
@@ -34,6 +37,17 @@ public class Boss extends FighterPlane {
 		framesWithShieldActivated = 0;
 		isShielded = false;
 		initializeMovePattern();
+		initializeSounds();
+	}
+
+	private void initializeSounds() {
+		this.fireballSound = SoundEffects.loadSound("/com/example/demo/sounds/fireball.wav", this.getClass());
+	}
+
+	private void playSound(AudioClip sound) {
+		if (sound != null) {
+			sound.play();
+		}
 	}
 
 	@Override
@@ -52,9 +66,18 @@ public class Boss extends FighterPlane {
 		updateShield();
 	}
 
-	@Override
+	/*@Override
 	public ActiveActorDestructible fireProjectile() {
 		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
+	}*/
+
+	@Override
+	public ActiveActorDestructible fireProjectile() {
+		if (bossFiresInCurrentFrame()) {
+			playFireballSound();
+			return new BossProjectile(getProjectileInitialPosition());
+		}
+		return null;
 	}
 
 	@Override
@@ -134,5 +157,9 @@ public class Boss extends FighterPlane {
 
 	public boolean isShielded() {
 		return isShielded;
+	}
+
+	public void playFireballSound() {
+		playSound(fireballSound);
 	}
 }
