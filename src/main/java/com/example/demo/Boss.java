@@ -66,11 +66,6 @@ public class Boss extends FighterPlane {
 		updateShield();
 	}
 
-	/*@Override
-	public ActiveActorDestructible fireProjectile() {
-		return bossFiresInCurrentFrame() ? new BossProjectile(getProjectileInitialPosition()) : null;
-	}*/
-
 	@Override
 	public ActiveActorDestructible fireProjectile() {
 		if (bossFiresInCurrentFrame()) {
