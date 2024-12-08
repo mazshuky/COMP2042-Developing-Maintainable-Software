@@ -23,6 +23,17 @@ The bomb falls down the screen by 5 pixels each time the `moveDown` method is ca
 The bomb’s position is controlled using the setLayoutX and setLayoutY methods of JavaFX to adjust its horizontal and vertical coordinates.
 The bomb has a sound effect (`bombDropSound`) that plays every time the bomb moves down.
 
+## [BossHealth.java]
+The `BossHealth` class is a custom implementation for managing and displaying the health of a boss character in a game using JavaFX.
+It is specifically designed to provide an intuitive visual representation of the boss's health through a progress bar, which dynamically
+updates as the boss takes damage or heals. The class extends `ProgressBar`, a JavaFX control, and initializes it with specific properties,
+including its size, position, and initial progress value (set to 100% health by default). A method `update(double health)` allows other parts
+of the game to update the boss's health dynamically. The health is represented as a floating-point value between 0.0 (no health) and 1.0 (full health).
+
+In addition, the health bar is placed at a fixed position on the screen (x: 1070, y: 20) and has a specified width (200 pixels) and height (25 pixels).
+This location is likely chosen to fit within the user interface of the game, typically near the top-right corner or another prominent area.
+The appearance of the health bar can be modified by color (`-fx-accent: green;`), allowing for visual feedback on the boss's health status.
+
 # Modified Java Classes
 ## [ActiveActor.java]
 * The image is loaded with additional null checking to ensure that the program will check whether the resource actually
@@ -43,3 +54,7 @@ The bomb has a sound effect (`bombDropSound`) that plays every time the bomb mov
   This separation enhances the clarity of the class and makes it easier to tweak or extend specific behaviors (e.g., movement, attack, or shield).
 * The `resetMovePattern()` method was introduced to manage the movement pattern and reset the boss’s position when it goes out of bounds
   or needs to change its behavior. This reduces code duplication and further clarifies the boss’s movement logic.
+
+## [BossProjectile.java]
+* The primary change is the modification of the `IMAGE_HEIGHT` constant from 75 to 30. This change affects the visual appearance
+  of the `BossProjectile`, making it smaller and for aesthetic reasons.
