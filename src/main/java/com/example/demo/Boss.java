@@ -232,4 +232,27 @@ public class Boss extends FighterPlane {
 	public void playFireballSound() {
 		playSound(fireballSound);
 	}
+
+	/**
+	 * Activates the Boss's shield, intended for JUnit testing only.
+	 */
+	public void activateShieldPublic() {
+		activateShield();
+	}
+
+	/**
+	 * Updates the shield status of the Boss, intended for JUnit testing only.
+	 */
+	public void updateShieldPublic() {
+		updateShield();
+	}
+
+	/**
+	 * Returns the fireball sound effect, intended for JUnit testing only.
+	 *
+	 * @return the AudioClip representing the fireball sound effect
+	 */
+	public AudioClip getFireballSound() {
+		return fireballSound;
+	}
 }
