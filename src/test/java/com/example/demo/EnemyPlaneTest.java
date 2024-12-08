@@ -23,7 +23,7 @@ class EnemyPlaneTest extends ApplicationTest {
         EnemyPlane enemyPlane = new EnemyPlane(100, 100);
         ActiveActorDestructible projectile = enemyPlane.fireProjectile();
         if (projectile != null) {
-            assertTrue(projectile instanceof EnemyProjectile, "The projectile should be an instance of EnemyProjectile.");
+            assertInstanceOf(EnemyProjectile.class, projectile, "The projectile should be an instance of EnemyProjectile.");
         }
     }
 
