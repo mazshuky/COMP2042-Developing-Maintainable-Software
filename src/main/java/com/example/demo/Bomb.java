@@ -18,7 +18,7 @@ public class Bomb extends ImageView {
             System.out.println("Bomb image resource not found.");
         }
         this.setFitHeight(BOMB_SIZE);
-        this.setFitWidth(BOMB_SIZE);
+        this.setPreserveRatio(true);
     }
 
     public void moveDown() {
