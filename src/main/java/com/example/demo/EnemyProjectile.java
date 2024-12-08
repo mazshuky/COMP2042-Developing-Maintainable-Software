@@ -37,22 +37,4 @@ public class EnemyProjectile extends Projectile {
 		updatePosition();
 	}
 
-	/**
-	 * Gets the current X position of the EnemyProjectile.
-	 *
-	 * @return the current X position
-	 */
-	public double getXPos() {
-		return super.getXPos();
-	}
-
-	/**
-	 * Gets the current Y position of the EnemyProjectile.
-	 *
-	 * @return the current Y position
-	 */
-	public double getYPos() {
-		return super.getYPos();
-	}
-
 }
