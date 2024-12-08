@@ -70,3 +70,6 @@ The appearance of the health bar can be modified by color (`-fx-accent: green;`)
 * The code now uses `getProjectilePosition(PROJECTILE_X_POSITION_OFFSET, PROJECTILE_Y_POSITION_OFFSET)`, which is assumed
   to return both X and Y coordinates as a `double[]`. The change to using a single method `getProjectilePosition()`
   that returns both X and Y coordinates as an array improves code clarity and reduces redundancy.
+
+## [EnemyProjectile.java]
+* The addition of the getter methods (`getXPos()` and `getYPos()`) improves the structure by offering more utility without altering the core functionality.
