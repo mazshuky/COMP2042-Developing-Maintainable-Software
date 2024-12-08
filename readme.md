@@ -58,3 +58,15 @@ The appearance of the health bar can be modified by color (`-fx-accent: green;`)
 ## [BossProjectile.java]
 * The primary change is the modification of the `IMAGE_HEIGHT` constant from 75 to 30. This change affects the visual appearance
   of the `BossProjectile`, making it smaller and for aesthetic reasons.
+
+## [EnemyPlane.java]
+* Sound effects are introduced in the modified class. The class now includes `AudioClip` variables to store the sound effects for when
+  the enemy plane is destroyed (`enemyDestroyedSound`) and when it fires a projectile (`fireProjectileSound`).
+* A private method `initializeSounds()` is added to load the sound files. This method ensures that the sound effects are loaded
+  correctly and provides a centralised location for managing sound resources.
+* A private `playSound()` method is introduced to play the sound effects.
+* A `playEnemyDestroySound()` method is added to play the sound effect when an enemy plane is destroyed. This method is called
+  when the enemy plane is destroyed, providing auditory feedback to the player.
+* The code now uses `getProjectilePosition(PROJECTILE_X_POSITION_OFFSET, PROJECTILE_Y_POSITION_OFFSET)`, which is assumed
+  to return both X and Y coordinates as a `double[]`. The change to using a single method `getProjectilePosition()`
+  that returns both X and Y coordinates as an array improves code clarity and reduces redundancy.
