@@ -39,8 +39,8 @@ public class Main extends Application {
 				LOGGER.log(Level.WARNING, "Icon resource not found: /com/example/demo/images/skybattlefavicon.png");
 			}
 
-			Controller myController = new Controller(stage);
-			myController.launchGame(stage);
+			MainMenu mainMenu = new MainMenu(stage);
+			mainMenu.showMainMenu();
 
 		} catch (SecurityException | IllegalArgumentException e) {
 			throw new CustomException("Error launching game", e);
