@@ -115,9 +115,66 @@ The appearance of the health bar can be modified by color (`-fx-accent: green;`)
   This method clears the current hearts and re-initializes the display according to the new health value, making the class
   more flexible for use in scenarios where the number of hearts may change over time.
 
-## LevelParent.java
-## LevelOne.java
-## LevelTwo.java
+## [LevelParent.java] | check again
+* The `Observable` and `setChanged()/notifyObservers()` are replaced by the `PropertyChangeSupport` and `PropertyChangeListener`, offering
+  a more structured and decoupled approach for notifying other components about the level change, improving flexibility and scalability for the game logic.
+* The background is now initialized in a dedicated method (`initializeBackground()`), which is more focused and easier to manage. 
+  The timeline setup is streamlined, and the game loop setup is separated in its own method (`initializeTimeline()`). By moving background 
+  and timeline setup into their own methods, the code becomes modular and easier to follow.
+* Key press handling has been refactored into two distinct methods: `handleKeyPress(KeyCode)` and `handleKeyRelease(KeyCode)`, making
+  the logic more modular and easier to maintain. This change is part of the cleaner separation of concerns, and simplifies adding
+  or modifying key controls in the future. The `switch` statement makes the code more organized and maintainable.
+* The `bombs` list is introduced, along with handling for bomb collisions and updates. This is a new game feature for `LevelThree.java`.
+* The logic for checking if the game is over, along with going to the next level, is handled by firing a property change event (`support.firePropertyChange()`), 
+  and additional checks for the level change are introduced.
+* The game tutorial is introduced with a button that shows a tutorial screen when clicked.
+* The `currentNumberOfEnemies` has been changed to a `SimpleIntegerProperty` to facilitate easier binding to other UI components and
+  react to changes in the number of enemies automatically.
+* Spawn timing is now controlled by `lastSpawnTime`, which tracks when the next enemy should spawn, providing more precise control over spawn intervals.
+* Enemy projectile spawning is handled by a separate method, `generateEnemyFire()`, improving code organization.
+* Collision detection has been consolidated into a single method, `handleCollisions()`, to handle various actor interactions
+  (e.g., planes vs. projectiles, projectiles vs. enemies), removing redundancy and making it more reusable.
+* Enemy penetration detection has been moved to a dedicated method, `enemyHasPenetratedDefenses()`, making the logic clearer and more readable.
+  This method checks if an enemy has crossed the defense line.
+* When an enemy penetrates the defenses, it causes damage to the player and is destroyed, which is handled in the `handlePenetratedEnemies()` method 
+  that checks all enemies.
+
+## [LevelOne.java]
+* The constructor has been modified to accept two additional parameters: `HeartDisplay heartDisplay` and `Controller controller`. 
+  This allows the constructor to integrate heart display management (for showing player lives) and a game controller object for better handling of game logic.
+  The `super()` call is modified to reflect the new parameters, and constants like `BACKGROUND_IMAGE_ONE` and `PLAYER_INITIAL_HEALTH` are replaced with values from a `GameConstants` class.
+* The logic to advance to the next level is now more abstracted in the `advanceToLevelTwo()` method (which is introduced later). The condition  `userHasReachedKillTarget()` 
+  is replaced with the method `isKillTargetReached()`, which is more descriptive and encapsulates the kill target check logic.
+* The `initializerFriendlyUnits` method now uses a helper method `addUserToRoot()` for adding the user to the root, making the code
+  more modular and easier to maintain or extend.
+* The spawning logic is refactored into smaller, more manageable methods. The `canSpawnEnemy()` checks if a new enemy can spawn 
+  based on the maximum enemy cunt and the time since the last spawn. The `spawnNewEnemy()` encapsulates the actual logic for spawning 
+  a new enemy at a random Y-position. The `updateLastSpawnTime()` tracks the time of the last spawn. These changes make the spawning logic
+  cleaner and separates concerns for better readability.
+* Instead of using a hardcoded constant `PLAYER_INITIAL_HEALTH`, the updated code now retrieves this value from the `GameConstants` class. 
+  This enhances maintainability, especially if the value is used in multiple places throughout the game.
+
+## [LevelTwo.java]
+* The constructor now takes `HeartDisplay heartDisplay` and `Controller controller` parameters, aligning with the changes made in the `LevelOne` class. 
+  These allow for heart display management and a game controller to handle interactions or game logic.
+* Instead of directly creating the boss inside the constructor, it is now done via the `initializeBoss()` method. 
+* The level view (`LevelViewLevelTwo`) is instantiated right in the constructor.
+* The method `addPlayerToRoot()` is now used instead of directly adding the player (`getUser()`) to the root. This is a refactor for better organization and code readability.
+* Instead of calling `winGame()` when the boss is destroyed, the code now calls `advanceToLevelThree()`. It uses `goToNextLevel(GameConstants.LEVEL_THREE)` to perform 
+  the transition, ensuring the game flow proceeds correctly. This method transitions the game to the next level, 
+  aligning with the game's progression to level three.
+* The check for the number of enemies (`getCurrentNumberOfEnemies() == 0`) is replaced with the `isNoEnemiesOnScreen()` method, which improves the readability of the code.
+* The action to add the boss to the root is now done through the method `addBossToRoot()` instead of directly calling `addEnemyUnit(boss)`. 
+  This adds a layer of abstraction and keeps the code more modular.
+* The `LevelViewLevelTwo` instantiation in the method has been simplified. There is no need to assign the result to `levelView` in this method since it is returned immediately. 
+  This change reduces redundancy in the code.
+* The `bindShieldToBoss()` method is added to bind the shield image's position to the boss's coordinates. It uses a `translateX` and `translateY` property binding 
+  to keep the shield positioned relative to the boss, improving the visual display when the boss has a shield.
+* The `requestFocusForBackground()` method ensures the background is focused when the game starts, which is useful for handling input events.
+* The `startTimeline()` method starts the game's timeline, which encapsulates the timeline starting logic, making it clearer where the game's animation begins.
+* Like the changes made in `LevelOne`, constants are now moved into the `GameConstants` class. This makes the code more maintainable, as constants such as 
+  `BACKGROUND_IMAGE_TWO` and `PLAYER_INITIAL_HEALTH` are defined in one place.
+
 ## LevelView.java
 ## LevelViewLevelTwo.java
 ## Projectile.java
