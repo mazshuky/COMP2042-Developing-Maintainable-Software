@@ -2,14 +2,139 @@
 Link: https://github.com/mazshuky/CW2024
 
 # Compilation Instructions
-provide a clear, step-by-step guide on how to compile the code to produce the application. Include any dependencies or special settings required.
+To compile the code and produce the application, ensure you have the following prerequisites:
+1. **Java Development Kit (JDK) 11 or higher installed on your system.** 
+   * You can download the JDK from the [official Oracle website](https://www.oracle.com/java/technologies/downloads/#java11?er=221886) or use [OpenJDK](https://openjdk.org/).
+   * After installation, verify the JDK is installed properly:
+        ```bash
+        java -version
+        javac -version
+        ```
+2. **JavaFX11 or higher** 
+    * You can download the JavaFX SDK from the [official website](https://gluonhq.com/products/javafx/).
+    * Extract the downloaded JavaFX SDK to a location on your system.
+    * JavaFX is a library for building user interfaces in Java applications.
+3. **Apache Maven**
+    * Apache Maven is used for managing the dependencides and building project.
+    * Download and install Apache Maven from the [official website](https://maven.apache.org/download.cgi).
+    * After installation, verify Maven is installed properly:
+        ```bash
+        mvn -version
+        ```
+4. **IDE with Maven support**
+    * Use an Integrated Development Environment (IDE) like IntelliJ IDEA or Eclipse with Maven support for easier project management.
+    * You can download IntelliJ IDEA from the [official website](https://www.jetbrains.com/idea/download/) or Eclipse from the [official website](https://www.eclipse.org/downloads/).
 
-Before you start, ensure you have the following installed:
-* Java Development Kit (JDK) 11 or higher to compile and run the code.
-* JavaFX 11 or higher to run the JavaFX application.
-* Apache Maven to manage dependencies and build the project.
-* IDE (e.g., IntelliJ IDEA, Eclipse) with Maven support for easier project management.
-- add dependency
+# Step-by-Step Instructions 
+Step 1: **Clone the repository**
+* Clone the repository or download the source code as a ZIP file.
+   ```bash
+   git clone https://github.com/mazshuky/CW2024.git
+   ```
+  or download the ZIP and extract it.
+
+Step 2: **Open the project in your IDE**
+* Open the project in your preferred IDE (IntelliJ IDEA, Eclipse, etc.).
+ * If using IntelliJ IDEA:
+   * Select `File -> Open...` and open the project's root directory.
+   * IntelliJ will automatically detect the Maven project and import the necessary dependencies.
+ * If using Eclipse:
+   * Select `File -> Import... -> Existing Maven Projects`.
+   * Browse to the project directory and select it.
+
+Step 3: **Verify Maven Dependencies** 
+* Ensure that the `pom.xml` file is in the root directory of the project.
+* This file contains all the necessary dependencies required by the project, including JavaFX and other libraries.
+Here are the key dependencies that are already included:
+```
+<dependencies>
+    <!-- JavaFX Dependencies -->
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>19.0.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics</artifactId>
+        <version>19.0.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>19.0.2</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-media</artifactId>
+        <version>19.0.2</version>
+    </dependency>
+
+    <!-- TestFX for UI Testing -->
+    <dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-core</artifactId>
+        <version>4.0.16-alpha</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.9.2</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.9.2</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>5.7.0</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.testfx</groupId>
+        <artifactId>testfx-junit5</artifactId>
+        <version>4.0.16-alpha</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+This includes:
+* **JavaFX Dependencies:** `javafx-controls`, `javafx-graphics`, `javafx-fxml`, `javafx-media` (for building the UI and media handling).
+* **Testing Dependencies:** `TestFX` (for UI testing), `JUnit 5` (for unit tests), and `Mockito` (for mocking).
+If you don't see the JavaFX dependency, add it manually to the `<dependencies>` section as shown above.
+
+Step 4: **Build the Project**
+* Open the terminal/command prompt in your project directory.
+* Run the following Maven command to compile the project and download all required dependencies: 
+    ```bash
+    mvn clean install
+    ```
+  This will download JavaFX (if not already installed) and any other dependencies, and build the project.
+
+Step 5: **Configure JavaFX (If Not Already Set)**
+* If your IDE does not automatically configure JavaFX, you may need to set the JavaFX SDK path manually.
+* In IntelliJ IDEA:
+    * Go to `File -> Project Structure -> Project Settings -> Libraries`.
+    * Click the `+` icon and add the JavaFX SDK path.
+    * Go to `File -> Project Structure -> Project Settings -> Modules`.
+    * Select the `Dependencies` tab and click the `+` icon.
+    * Add the JavaFX SDK path as a module dependency.
+* In Eclipse:
+* Right-click on the project and select `Build Path -> Configure Build Path`.
+    * Click `Add Library` and select `User Library`.
+    * Click `User Libraries` and then `New`.
+    * Enter a name for the library (e.g., JavaFX) and click `OK`.
+    * Select the newly created library and click `Add External JARs`.
+    * Add the JavaFX JAR files from the SDK's `lib` directory.
+    * Click `Apply and Close`.
+
+Step 6: **Run the Application**
+* Run the main class `com.example.demo.Main` to start the application.
 
 # Implemented and Working Properly
 ## Sound Effects
@@ -57,7 +182,6 @@ Before you start, ensure you have the following installed:
 
 # Implemented but Not Working Properly
 List any features that have been implemented but are not working correctly. Explain the issues you encountered, and if possible, the steps you took to address them.
-
 
 # Features Not Implemented
 Identify any features that you were unable to implement and provide a clear explanation for why they were left out.
