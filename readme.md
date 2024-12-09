@@ -38,12 +38,66 @@ In addition, the health bar is placed at a fixed position on the screen (x: 1070
 This location is likely chosen to fit within the user interface of the game, typically near the top-right corner or another prominent area.
 The appearance of the health bar can be modified by color (`-fx-accent: green;`), allowing for visual feedback on the boss's health status.
 
-## GameConstants.java
-## GameTutorial.java
-## GameTutorialController.java
-## SoundEffects.java
-## LevelThree.java
-## LevelViewLevelThree.java
+## [GameConstants.java]
+The `GameConstants` class centralises and organises all constant values used throughout the game, including configuration
+settings, such as screen positions, game parameters(like health and enemy constants), resource paths, and timing intervals.
+By storing these values in one location, it ensures consistency across the game, simplifies future updates, and makes the code more
+maintainable. Changes to game settings like health or spawn intervals, can be easily made in a single place, promoting cleaner,
+more organised, and scalable code. This class is located in the `com.example.demo` package and referenced in `LevelOne.java`, `LevelParent.java`, 
+and `LevelView.java`.
+
+## [GameTutorial.java]
+The `GameTutorial` class is the primary component responsible for displaying the game's tutorial window. It manages the process
+of pausing the game and loading the tutorial's user interface from an FXML file. Using JavaFX, the tutorial window is created
+as a modal stage that blocks interaction with other parts of the application until it is closed. The class also sets a custom
+icon for the window using an image resource. If an error occurs while loading the tutorial's FXML file, a `CustomException`
+is thrown and logged. The `Controller` class, which is assumed to be part of the larger application, is responsible for
+pausing and resuming the game during the tutorial’s display. In addition to the `GameTutorial` class, several JavaFX built-in classes
+are used in the implementation, including `FXMLLoader` for loading the tutorial layout, `Stage` for creating the tutorial window,
+and `Scene` for displaying the content. The `Image` class is used to set the window’s icon, and the `Modality` enum ensures
+that the tutorial window is modal, preventing the user from interacting with other windows. The `Logger` class from Java's logging framework 
+is also used to log any issues, such as missing resources or errors during the tutorial's loading process. These components together 
+ensure that the tutorial functionality is smoothly integrated into the game. This class is also located in the `com.example.demo` package
+and referenced in `LevelParent.java`.
+
+## [GameTutorialController.java]
+The `GameTutorialController` is a controller class that manages the tutorial screen for the game. It serves as the connection between
+the FXML file and the logic of the application. It is responsible for handling the initialization of the UI and other interaction
+logic for the tutorial. This class is located in the `com.example.demo` package and referenced in `GameTutorial.java`.
+
+## [SoundEffects.java]
+The `SoundEffects` class is a utility designed to handle the loading and management of sound effects in the game.
+It provides a method, `loadSound`, which takes a file path and class as parameters to load an `AudioClip` from the specified resource.
+If the sound file is found, it returns an `AudioClip` object; otherwise, it logs a warning or error message, depending on the issue encountered,
+such as a missing or corrupted sound file. This class uses a `Logger` instance to log messages, helping developers troubleshoot any issues
+related to sound loading. By encapsulating the logic for loading audio and handling potential errors, the `SoundEffects` class
+simplifies sound management, making it easy to integrate sound effects into games or applications while providing helpful debugging information.
+Location wise, the class is located in the `com.example.demo` package and referenced in `Bomb.java`, `Boss.java`, `UserPlane.java`, `EnemyPlane.java`, and `MainMenu.java`.
+
+## [LevelThree.java]
+The `LevelThree` class manages the behavior and properties of the third level of the game. It is added to increase the game's difficulty before players can successfully win the game.
+It is designed as a subclass of LevelParent, indicating that it inherits shared functionality for game levels while implementing level-specific behavior. The class includes methods which 
+are similar to `LevelTwo` class, but what makes this level unique is the introduction of bombs that fall from the top of the screen. The player must avoid these bombs to prevent taking damage.
+This level utilizes two Timeline objects, `bombGenerationTimeline` and `BombMovementTimeline`, to manage bomb generation and movement. The `bombGenerationTimeline` 
+creates bombs at regular intervals, while the `BombMovementTimeline` moves them down the screen. These timelines are initialized through the `initializeBombs()` function. 
+The `checkIfGameOver()` function monitors the game's status by checking if the player has been destroyed or if the boss has been defeated. If the player is defeated, the `loseGame()` function is called, 
+and if the boss is defeated, the `winGame()` function is triggered.
+
+Furthermore, bombs are generated by the `generateBomb()` function, which creates a new bomb at a random x-position at the top of the screen and adds it to the bomb list. 
+The `moveBombs()` function moves these bombs downward and checks for collisions with the player. If a collision is detected, the `checkBombCollision()` function 
+damages the player and resets the bomb's position to the top of the screen using the `resetBombPosition()` function. This ensures that the bombs are 
+continuously generated, moved, and reset after any interaction with the player. The location of this class is in the `com.example.demo` package and used in `Controller.java`.
+
+## [LevelViewLevelThree.java]
+The `LevelViewLevelThree` class is responsible for displaying and updating the key visual elements for `LevelThree` of the game, such as the boss's shield image and health bar. 
+The shield image appears at a fixed position on the screen when the boss is shielded, while the health bar dynamically reflects the boss's remaining health. 
+These elements are added to a root container, which organizes and displays them on the screen. The class inherits from `LevelView`, initializing shared properties 
+and then focusing on the specific components for `LevelThree`.
+
+The `LevelViewLevelThree` class works closely with other components like the `ShieldImage` and `BossHealth` classes. The `ShieldImage` manages the 
+visibility of the boss's shield, while the `BossHealth` updates the health bar as the boss takes damage. Together, these components ensure 
+the player receives real-time feedback on the boss's status, enhancing the game's interactivity and providing a clear, visual representation 
+of the boss's condition throughout the level. The location of this class is in the `com.example.demo` package and used in `LevelThree.java`.
 
 # Modified Java Classes
 ## [ActiveActor.java]
