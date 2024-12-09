@@ -175,8 +175,34 @@ The appearance of the health bar can be modified by color (`-fx-accent: green;`)
 * Like the changes made in `LevelOne`, constants are now moved into the `GameConstants` class. This makes the code more maintainable, as constants such as 
   `BACKGROUND_IMAGE_TWO` and `PLAYER_INITIAL_HEALTH` are defined in one place.
 
-## LevelView.java
-## LevelViewLevelTwo.java
+## [LevelView.java]
+* The initialization of `heartDisplay`, `winImage`, and `gameOverImage` has been moved to separate methods (`setUpHeartDisplay()`, `createWinImage()`, `createGameOverImage()`) to improve readability of the constructor 
+  by isolating component creation logic into dedicated helper methods.
+* Methods like `setUpHeartDisplay()`, `createWinImage()`, and `createGameOverImage()` have been introduced to encapsulate the logic for creating each component. 
+  These methods are used in the constructor to maintain modularity and make the code easier to modify in the future.
+* All static position constants for heart display, win image, and game over screen have been moved to `GameConstants` class, making the code cleaner and easier to manage and
+  allow easy updates to position or configuration in the GameConstants class.
+* Before adding each component (heart display, win image, and game over image) to the root, the refactored version checks whether 
+  it is already present in the root's children. This prevents multiple additions of the same component to the root group, 
+  improving performance and avoiding visual artifacts like duplicate images.
+* The updated `removeHearts` ensures that `heartsRemaining` is always non-negative by using `Math.max(heartsRemaining, 0)` to prevent
+  potential errors when attempting to remove more hearts than available (i.e., if `heartsRemaining` is negative).
+* The addition of the `getWinImage()` method allows external access to the `winImage` object, which can be useful in cases where 
+  other classes need to interact with or manipulate the `winImage`.
+* The position constants (`HEART_DISPLAY_X_POSITION`, `WIN_IMAGE_X_POSITION`, etc.) have been moved to the `GameConstants` class for easier management of positions across the game. 
+  If the positions need to be updated in the future, they can be changed in a single place (`GameConstants`), rather than searching through the entire codebase.
+
+## [LevelViewLevelTwo.java]
+* The constructor now initializes a `BossHealth` instance, which wasn't present in the original code. This is a new feature to display
+  and update the boss's health during the level.
+* The `addImagesToRoot()` is updated to add the `bossHealthBar` to the root's children, allowing the health bar to be displayed on the 
+  screen alongside the shield image. 
+* The `updateBossHealth()` method has been introduced to update the boss health. It calls the `update()` method on the `bossHealthBar` to adjust the 
+  health bar based on the boss's health percentage. This is a critical addition for dynamically updating the boss's health during the game.
+* A getter method for the `shieldImage` has been added, enabling other parts of the code to access and manipulate the shield image if needed. 
+  This is useful for controlling the visibility of the shield image from another class or update its state.
+* The position of the shield image (`SHIELD_X_POSITION` and `SHIELD_Y_POSITION`) has been changed to reflect an update in the game layout for better visual alignment on the screen.
+
 ## Projectile.java
 ## ShieldImage.java
 ## UserPlane.java
