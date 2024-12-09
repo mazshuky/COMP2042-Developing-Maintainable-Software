@@ -1,3 +1,64 @@
+# GitHub
+Link: https://github.com/mazshuky/CW2024
+
+# Compilation Instructions
+provide a clear, step-by-step guide on how to compile the code to produce the application. Include any dependencies or special settings required.
+
+Before you start, ensure you have the following installed:
+* Java Development Kit (JDK) 11 or higher to compile and run the code.
+* JavaFX 11 or higher to run the JavaFX application.
+* Apache Maven to manage dependencies and build the project.
+* IDE (e.g., IntelliJ IDEA, Eclipse) with Maven support for easier project management.
+- add dependency
+
+# Implemented and Working Properly
+## Sound Effects
+### [Main Menu Sound]
+* When the game launches, a sound effect is played to enhance the user experience and provide auditory feedback that the game is starting.
+* The `mainMenuSound` is triggered when the `showMainMenu()` method is called, ensuring that the sound is played when the main menu is displayed.
+* The `playGameLaunchSound()` method plays the sound when the main menu is shown and the `stopGameLaunchSound()` method ensures the sound stops 
+  when the actual game starts after players press the Start Game button.
+
+### [Game Over Sound]
+* When the game is over, a sound effect is played to indicate the end of the game. This adds emotional feedback to the player,
+  signaling that the game has ended.
+* The `gameOverSound` is triggered correctly when the `handleGameOver()` method is called, ensuring that the game over
+  condition is accompanied by an appropriate sound.
+
+### [User Plane Firing Sound]
+* When the user plane fires a projectile, a shooting sound is played. This provides immediate feedback to the player,
+  making the shooting action more immersive.
+* The `shootSound` is played whenever the `fireProjectile()` method is called, correctly synchronising the sound with the firing action.
+
+### [Enemy Plane Destroyed Sound]
+* When an enemy plane is destroyed (either through a collision or another event), a sound effect is played to signify the destruction.
+  This enhances the gameplay experience by adding auditory feedback when enemies are defeated.
+* The `explosionSound` is played when the `playExplosionSound()` method is called, triggered by an enemy plane being destroyed.
+
+### [You Win Sound]
+* When the user plane wins the game, a sound effect is played to indicate victory. This audio cue provides positive feedback to the player,
+  celebrating their success and creating a satisfying conclusion to the game.
+* The `youWinSound` is played when the `winGame()` method is called, signalling that the player has successfully completed the game.
+
+## Health Progress Bar
+### Boss Plane Health Bar
+* The boss plane's health is displayed as a progress bar, providing a visual representation of the boss's remaining health.
+* The health bar is updated dynamically based on the boss plane's health value, reflecting the current status accurately.
+* The health bar is visible during the boss battle, allowing the player to track the boss plane's health.
+* The boss plane's health bar is positioned appropriately on the screen, making it easy for players to monitor the boss's health status.
+
+## Start Button
+* The main menu features a "Start Game" button that allows players to begin the game. This button serves as the entry point to the game,
+  providing a clear and intuitive way for users to initiate gameplay.
+* The button is displayed prominently on the main menu screen, making it easy for players to identify and interact with.
+* When the "Start Game" button is clicked, the game launches, transitioning from the main menu to the game environment.
+* The button is functional and responsive, triggering the game's start sequence when clicked by the player.
+* The button is styled appropriately to match the game's visual theme, ensuring consistency in the user interface design.
+
+# Implemented but Not Working Properly
+List any features that have been implemented but are not working correctly. Explain the issues you encountered, and if possible, the steps you took to address them.
+
+
 # Features Not Implemented
 Identify any features that you were unable to implement and provide a clear explanation for why they were left out.
 - mute sound button
@@ -210,8 +271,6 @@ of the boss's condition throughout the level. The location of this class is in t
 * The win/lose handling is more advanced as it invokes `handleWin()` or `handleGameOver()` in the `UserPlane` class after the game ends, making the user plane class more involved in managing the game state. 
   Win/loss conditions seem more integrated with the game’s progress, as evidenced by the level-up mechanic and checking the kill count to transition to the next level.
 
-
-
 ## [LevelOne.java]
 * The constructor has been modified to accept two additional parameters: `HeartDisplay heartDisplay` and `Controller controller`. 
   This allows the constructor to integrate heart display management (for showing player lives) and a game controller object for better handling of game logic.
@@ -322,7 +381,22 @@ of the boss's condition throughout the level. The location of this class is in t
   The constructor still sets the image as initially invisible, with the appropriate size and position.
 
 # Unexpected Problems
-Communicate any unexpected challenges or issues you encountered during the assignment. Describe how you addressed or attempted to resolve them.
-- progressing from level one to level two
-- you win image not appearing; hide the shield; add required hits to
-- sound not appearing initially
+While working on the game, I encountered several challenges that required attention and effort to resolve. Below are the key issues faced during development, along with the steps I took to address them:
+
+## Progressing from Level One to Level Two: 
+One of the challenges I faced was transitioning from Level One to Level Two. Initially, the game did not advance to the next level after the player reached the kill target. 
+To resolve this issue, I reviewed the code responsible for level transitions and identified a logic error in the condition that checked if the player had reached the kill target. 
+By updating the condition to accurately reflect the kill target status, I was able to successfully transition to Level Two upon reaching the required number of kills.
+
+## Win Image Not Appearing:
+Another issue I encountered was the win image not appearing when the player successfully completed the game. This was frustrating, as it provided no visual feedback that the game was won.
+After investigating the code, I discovered that the win image was not being displayed due to a conflict with the shield's visibility. The shield was being hidden at the same time 
+the win image should appear, causing the win image to be unintentionally obscured or not rendered correctly. Additionally, I realized that the win image was not triggering properly 
+because the boss plane wasn’t registering the required number of hits for the player to win. To resolve this, I made two key changes: I adjusted the order of operations in the code, ensuring 
+that the win image would be displayed before the shield was hidden then I implemented a check to ensure the boss plane required a specific number of hits before the win image would appear.
+With these fixes, the win image now correctly displays when the player meets the hit requirements and completes the game, providing clear visual feedback of their success.
+
+## Sound Effects Not Playing:
+When starting the game, the sound effects were not playing. This caused the game to feel incomplete, as there was no auditory feedback for the player. Upon investigating, 
+I realized that the sound files were not being preloaded correctly at the start of the game. I adjusted the audio initialization sequence to ensure that all sound assets 
+were properly loaded before gameplay began. After this change, the sound effects played correctly from the start of the game.
