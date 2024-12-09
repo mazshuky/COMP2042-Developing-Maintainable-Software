@@ -1,19 +1,26 @@
 package com.example.demo;
 
 import com.example.demo.controller.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelThree extends LevelParent {
 
-    private static final String BACKGROUND_IMAGE_THREE = "/com/example/demo/images/background3.jpg";
-    private static final int PLAYER_INITIAL_HEALTH = 5;
     private final Boss boss;
     private final LevelViewLevelThree levelView;
+    private final List<Bomb> bombs = new ArrayList<>();
+    private Timeline bombGenerationTimeline;
+    private Timeline bombMovementTimeline;
 
     public LevelThree(double screenHeight, double screenWidth, HeartDisplay heartDisplay, Controller controller) {
-        super(BACKGROUND_IMAGE_THREE, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH, heartDisplay, controller);
+        super(GameConstants.BACKGROUND_IMAGE_THREE, screenHeight, screenWidth, GameConstants.PLAYER_INITIAL_HEALTH, heartDisplay, controller);
         this.boss = initializeBoss();
-        this.levelView = new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH);
+        this.levelView = new LevelViewLevelThree(getRoot(), GameConstants.PLAYER_INITIAL_HEALTH);
         bindShieldToBoss();
+        initializeBombs();
     }
 
     @Override
@@ -40,13 +47,15 @@ public class LevelThree extends LevelParent {
 
     @Override
     protected LevelView instantiateLevelView() {
-        return new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH);
+        return new LevelViewLevelThree(getRoot(), GameConstants.PLAYER_INITIAL_HEALTH);
     }
 
     @Override
     public void startGame() {
         requestFocusForBackground();
         startTimeline();
+        startBombGenerationTimeline();
+        startBombMovementTimeline();
     }
 
     @Override
@@ -92,4 +101,46 @@ public class LevelThree extends LevelParent {
         getTimeline().play();
     }
 
+    private void initializeBombs() {
+        bombGenerationTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> generateBomb()));
+        bombGenerationTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        bombMovementTimeline = new Timeline(new KeyFrame(Duration.millis(50), e -> moveBombs()));
+        bombMovementTimeline.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    private void startBombGenerationTimeline() {
+        bombGenerationTimeline.play();
+    }
+
+    private void startBombMovementTimeline() {
+        bombMovementTimeline.play();
+    }
+
+    private void generateBomb() {
+        double xPosition = Math.random() * getScreenWidth();
+        Bomb newBomb = new Bomb(xPosition, 0);
+        bombs.add(newBomb);
+        getRoot().getChildren().add(newBomb);
+    }
+
+    private void moveBombs() {
+        for (Bomb bomb : bombs) {
+            bomb.moveDown();
+            checkBombCollision(bomb);
+        }
+    }
+
+    private void checkBombCollision(Bomb bomb) {
+        if (bomb.getBoundsInParent().intersects(getUser().getBoundsInParent())) {
+            getUser().takeDamage();
+            getUser().handleHit();
+            resetBombPosition(bomb);
+        }
+    }
+
+    private void resetBombPosition(Bomb bomb) {
+        bomb.setLayoutX(Math.random() * getScreenWidth());
+        bomb.setLayoutY(0);
+    }
 }
