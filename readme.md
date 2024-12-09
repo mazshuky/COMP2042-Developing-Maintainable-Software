@@ -34,6 +34,13 @@ In addition, the health bar is placed at a fixed position on the screen (x: 1070
 This location is likely chosen to fit within the user interface of the game, typically near the top-right corner or another prominent area.
 The appearance of the health bar can be modified by color (`-fx-accent: green;`), allowing for visual feedback on the boss's health status.
 
+## GameConstants.java
+## GameTutorial.java
+## GameTutorialController.java
+## SoundEffects.java
+## LevelThree.java
+## LevelViewLevelThree.java
+
 # Modified Java Classes
 ## [ActiveActor.java]
 * The image is loaded with additional null checking to ensure that the program will check whether the resource actually
@@ -71,5 +78,50 @@ The appearance of the health bar can be modified by color (`-fx-accent: green;`)
   to return both X and Y coordinates as a `double[]`. The change to using a single method `getProjectilePosition()`
   that returns both X and Y coordinates as an array improves code clarity and reduces redundancy.
 
-## [EnemyProjectile.java]
-* The addition of the getter methods (`getXPos()` and `getYPos()`) improves the structure by offering more utility without altering the core functionality.
+## [FighterPlane.java]
+* The `takeDamage()` method now delegates the health reduction to a helper method `decreaseHealth()`, ensuring that health does
+  not go below zero using `Math.max()`.
+* The damage amount is stored in a constant `DAMAGE_AMOUNT`, which is used in the `decreaseHealth()` method for improved maintainability and consistency.
+* The `setHealth()` method was added to allow setting a new health value and improves flexibility.
+* The `healthAtZero()` method has been removed as it was redundant. The check for `health == 0` is straightforward and only used once,
+  so it was replaced with a direct condition (`health <= 0`) to simplify the code and eliminate unnecessary overhead.
+* The two methods `getProjectileXPosition()` and `getProjectileYPosition()` are now combined into a single method `getProjectilePosition()`.
+  This reduces code duplication, improves efficiency, and returns both X and Y positions in a single array, making it easier to use
+  them together when spawning projectiles or performing other actions.
+
+## [GameOverImage.java]
+* The constructor now accepts additional width and height parameters, which allow the size of the image to be set upon creation. 
+  The `setGameOverImage()`, `setPosition()`, and `setDimensions()` methods are called within the constructor to improve modularity and clarity.
+* The image loading is moved to a dedicated method `setGameOverImage()`. This method attempts to load the image and logs an error if the image is not found.
+  By isolating the image setup logic, the constructor remains clean, and the image loading behavior can be easily modified in one place. 
+  The error handling (logging a message if the image is not found) adds robustness and helps with debugging.
+* The position and dimensions are set through two new methods, `setPosition(double xPosition, double yPosition)` and `setDimensions(double width, double height)`. 
+  These methods encapsulate specific tasks, improving the clarity of the constructor. It also makes it easier to modify these properties later, 
+  as the logic for positioning and resizing is now isolated.
+* The `setGameOverImage()` method now includes error handling. If the image resource cannot be found, an error message is logged to System.err.
+
+## [HeartDisplay.java]
+* Explicit error handling is introduced to check whether the resource is `null` and throws an `IllegalArgumentException`
+  with a descriptive error message if the heart image cannot be found.
+* The `ImageView` is created and delegated to the `createHeartImageView()` method. If the image is not found, the method
+  returns null, and the heart is not added to the container.
+* The constant `HEART_SIZE` is changed from 50 to 30 to improve visual preference, making it appear better in the game window.
+* `final` modifiers are added to the class fields to ensure that they are not modified after initialisation, which are
+  is helpful for maintaining the code and preventing unintended changes.
+* The `container` is explicitly initialized in the constructor (`this.container = new HBox();`). This makes the container
+  initialization clearer and more consistent with object-oriented principles, as it is instantiated directly within the constructor
+  instead of relying on an implicit initialization later.
+* An `update()` method is introduced to allow changing the heart display dynamically based on the current health value.
+  This method clears the current hearts and re-initializes the display according to the new health value, making the class
+  more flexible for use in scenarios where the number of hearts may change over time.
+
+## LevelParent.java
+## LevelOne.java
+## LevelTwo.java
+## LevelView.java
+## LevelViewLevelTwo.java
+## Projectile.java
+## ShieldImage.java
+## UserPlane.java
+## UserProjectile.java
+## WinImage.java
