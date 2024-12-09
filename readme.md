@@ -173,12 +173,14 @@ of the boss's condition throughout the level. The location of this class is in t
   This method clears the current hearts and re-initializes the display according to the new health value, making the class
   more flexible for use in scenarios where the number of hearts may change over time.
 
-## [LevelParent.java] | check again
+## [LevelParent.java] 
 * The `Observable` and `setChanged()/notifyObservers()` are replaced by the `PropertyChangeSupport` and `PropertyChangeListener`, offering
   a more structured and decoupled approach for notifying other components about the level change, improving flexibility and scalability for the game logic.
 * The background is now initialized in a dedicated method (`initializeBackground()`), which is more focused and easier to manage. 
   The timeline setup is streamlined, and the game loop setup is separated in its own method (`initializeTimeline()`). By moving background 
   and timeline setup into their own methods, the code becomes modular and easier to follow.
+* The constructor in the refactored version now accepts additional parameters, specifically the HeartDisplay and Controller. It also initializes `levelView`,
+  `PropertyChangeSupport`, and `currentNumberOfEnemies` (which is now a `SimpleIntegerProperty`).
 * Key press handling has been refactored into two distinct methods: `handleKeyPress(KeyCode)` and `handleKeyRelease(KeyCode)`, making
   the logic more modular and easier to maintain. This change is part of the cleaner separation of concerns, and simplifies adding
   or modifying key controls in the future. The `switch` statement makes the code more organized and maintainable.
@@ -196,6 +198,19 @@ of the boss's condition throughout the level. The location of this class is in t
   This method checks if an enemy has crossed the defense line.
 * When an enemy penetrates the defenses, it causes damage to the player and is destroyed, which is handled in the `handlePenetratedEnemies()` method 
   that checks all enemies.
+* The refactored version adds more structured game state management with specific methods for win (`winGame()`) and loss (`loseGame()`), indicating a cleaner separation of concerns.
+* The newest version also introduced the idea of transitioning between levels (`goToNextLevel` is now clearing the enemy units and triggering a property change for the next level).
+* Collision handling is more elaborate with specific checks for projectiles and bomb interactions. The `handleCollisions` method now checks collisions between bombs and friendly units, in addition to the other interactions.
+* The new structure of handling of destroyed actors allows for a more organized update of the game state, such as removing actors after destruction.
+* The health management is more integrated with the `HeartDisplay` class, which is used to visually represent the player’s health and update it as the game progresses.
+* Constants are introduced, such as `GameConstants.SCREEN_HEIGHT_ADJUSTMENT`, `GameConstants.MILLISECOND_DELAY`, `GameConstants.KILLS_TO_LEVEL_TWO`, and 
+  `GameConstants.LEVEL_TWO`, which makes the code more configurable and readable. These constants exist in the `GameConstants` class, which centralizes game configuration.
+* The `howToPlay()` and `showTutorial()` methods introduce a tutorial feature, allowing the user to click on an image that triggers a tutorial screen. 
+* The `pause()` and `resume()` methods are added for pausing and resuming the timeline, providing a way to pause the game during the tutorial.
+* The win/lose handling is more advanced as it invokes `handleWin()` or `handleGameOver()` in the `UserPlane` class after the game ends, making the user plane class more involved in managing the game state. 
+  Win/loss conditions seem more integrated with the game’s progress, as evidenced by the level-up mechanic and checking the kill count to transition to the next level.
+
+
 
 ## [LevelOne.java]
 * The constructor has been modified to accept two additional parameters: `HeartDisplay heartDisplay` and `Controller controller`. 
