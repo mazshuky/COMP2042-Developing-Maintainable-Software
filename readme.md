@@ -1,3 +1,7 @@
+# Features Not Implemented
+Identify any features that you were unable to implement and provide a clear explanation for why they were left out.
+- mute sound button
+
 # New Java Classes
 ## [MainMenu.java]
 The `MainMenu` class represents the game's main menu, serving as the entry point where players can either start the game
@@ -203,8 +207,53 @@ The appearance of the health bar can be modified by color (`-fx-accent: green;`)
   This is useful for controlling the visibility of the shield image from another class or update its state.
 * The position of the shield image (`SHIELD_X_POSITION` and `SHIELD_Y_POSITION`) has been changed to reflect an update in the game layout for better visual alignment on the screen.
 
-## Projectile.java
-## ShieldImage.java
-## UserPlane.java
-## UserProjectile.java
-## WinImage.java
+## [ShieldImage.java]
+* The `getClass().getResource()` method is used to load the shield image, and now there’s a check to ensure the resource is found before attempting to use it. 
+  If the resource is not found, a message is logged to the console (`"Shield image resource not found."`), which makes debugging easier.
+* The `System.out.println` statements are added to log the resource loading process and to confirm that the shield is initialized at the correct position.
+  This makes it easier to track if the image resource is being loaded correctly.
+* The path for the image resource was changed from `/images/shield.png` to `/com/example/demo/images/shield.png` to correctly handle the full path for the shield image.
+  This can ensure that the image is found regardless of where the code is executed.
+* The size of the shield image has been reduced from 200 to 50 to reflect a change in the design, making the shield appear smaller on the screen for visual aesthetics.
+* The constructor now includes a print statement that logs the position at which the `ShieldImage` is initialized, which can help developers track where the shield is placed on the screen.
+* The `showShield()` method now includes additional behavior. Not only does it make the shield visible, but it also brings the shield to the front of the scene using the `toFront()` method. 
+  This ensures that the shield will be displayed on top of other elements that might overlap with it.
+* A `System.out.println` statement has been added to log when the shield becomes visible, making it easier to track the game’s state during debugging.
+
+## [UserPlane.java]
+* The class previously only supported vertical movement using `velocityMultiplier`. Now, horizontal movement is handled separately with 
+  a new variable `horizontalVelocityMultiplier`, which controls the plane's movement along the x-axis. This allows the player to move the plane both up/down and left/right, 
+  improving the plane's control and responsiveness.
+* In the refactored version, horizontal velocity (`HORIZONTAL_VELOCITY`) is added, allowing movement along the x-axis (left/right). `X_LEFT_BOUND` and `X_RIGHT_BOUND` 
+  are also added to define the horizontal limits within which the plane can move. This ensures that the plane can't move off the screen horizontally.
+* The `updatePosition` method is now handling both vertical and horizontal movements. The plane’s position is updated based on both vertical and horizontal 
+  velocities (`verticalVelocityMultiplier` and `horizontalVelocityMultiplier`).
+* The `isOutOfBounds` method checks if the plane is out of the predefined bounds (both vertical and horizontal) and resets its position if it exceeds these boundaries.
+* The `moveUp`, `moveDown`, and `stop` methods have been updated to handle both vertical and horizontal movement. Two new methods, `moveLeft` and `moveRight`, have been added to enable left and right movement. 
+  The stop method now stops both vertical and horizontal movement by resetting both `verticalVelocityMultiplier` and `horizontalVelocityMultiplier` to 0.
+* The projectile's position is obtained using a helper method `getProjectilePosition`, which returns both x and y coordinates for the projectile.
+* Sound effects are now integrated into the `UserPlane` class for various actions (shooting, game over, winning, and being hit).
+* The `fireProjectile` method now plays a shooting sound effect (`shootSound`) when a projectile is fired.
+* The `initializeSounds` method loads the sound files, and the `playSound` method plays the sounds when needed. 
+* Methods for handling game over (`handleGameOver`), being hit (`handleHit`), and winning (`handleWin`) have been added. These methods not only play the appropriate 
+  sound effects but also perform actions like showing a win image in the case of a win.
+* The `UserPlane` now has a `HeartDisplay` instance that is responsible for showing the user's health. The `setHealth` method updates both the internal health and the heart display.
+
+## [UserProjectile.java]
+* The `IMAGE_HEIGHT` has been reduced from 125 to 30 to represent a more appropriate size and is suitable for visual representation for the projectile in comparison to the original. The previous size was too large for the intended gameplay. 
+* The initial x and y positions of the projectile have been adjusted by adding offsets to both the x (+30) and y (+60) coordinates to ensure the projectile originates from the correct 
+  position relative to the user's plane. For example, if the plane's image or the firing position is offset in the sprite, this ensures the projectile doesn’t appear inside the plane itself.
+
+## [WinImage.java]
+* A new method `initializeImage()` is introduced to handle the image loading. This method checks if the resource is valid (i.e., the image exists at the given path). 
+  If not, an error message is printed to the standard error stream. This improves the code by adding robustness in the case of missing resources.
+* The size of the win image has been reduced from 500x600 to 400x500. This change may have been made to better fit the game’s user interface,
+  ensuring that the win image is appropriately scaled when displayed.
+* The `initializeImage()` method is now called in the constructor to handle the image setup, improving the clarity and separation of responsibilities in the code. 
+  The constructor still sets the image as initially invisible, with the appropriate size and position.
+
+# Unexpected Problems
+Communicate any unexpected challenges or issues you encountered during the assignment. Describe how you addressed or attempted to resolve them.
+- progressing from level one to level two
+- you win image not appearing; hide the shield; add required hits to
+- sound not appearing initially
