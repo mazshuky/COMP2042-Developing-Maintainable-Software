@@ -84,7 +84,7 @@ public class LevelView {
 	}
 
 	/**
-	 * Removes the win image from the screen.
+	 * Removes the hearts from the screen.
 	 */
 	public void removeHearts(int heartsRemaining) {
 		heartsRemaining = Math.max(heartsRemaining, 0);
@@ -94,6 +94,11 @@ public class LevelView {
 		}
 	}
 
+	/**
+	 * Gets the win image component.
+	 *
+	 * @return the win image
+	 */
 	public WinImage getWinImage() {
 		return winImage;
 	}
