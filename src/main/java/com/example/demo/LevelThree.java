@@ -46,7 +46,7 @@ public class LevelThree extends LevelParent {
     /**
      * Checks if the game is over by verifying if the player has been destroyed or if the boss is defeated.
      * If the player is destroyed, the game will invoke the loseGame() method.
-     * If the boss is destroyed, the game will invoke the winGame() method.
+     * If the boss is destroyed, the game will invoke three methods: the winGame(), StopBombElements(), and stopFireballSound().
      */
     @Override
     protected void checkIfGameOver() {
@@ -55,6 +55,8 @@ public class LevelThree extends LevelParent {
         }
         else if (boss.isDestroyed()) {
             winGame();
+            stopBombElements();
+            stopFireballSound();
         }
     }
 
@@ -231,4 +233,26 @@ public class LevelThree extends LevelParent {
         bomb.setLayoutX(Math.random() * getScreenWidth());
         bomb.setLayoutY(0);
     }
+
+    /**
+     * Stops the bomb elements by stopping the bomb generation and movement timelines.
+     */
+    private void stopBombElements() {
+        if (bombGenerationTimeline != null) {
+            bombGenerationTimeline.stop();
+        }
+        if (bombMovementTimeline != null) {
+            bombMovementTimeline.stop();
+        }
+    }
+
+    /*
+     * Stops the fireball sound effect.
+     */
+    public void stopFireballSound() {
+        if (boss.getFireballSound() != null) {
+            boss.getFireballSound().stop();
+        }
+    }
+
 }
