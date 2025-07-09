@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.demo.GameTutorialController" spacing="10" style="-fx-padding: 20; -fx-alignment: center; -fx-font-family: 'Arial';">
+    <Label text="Game Tutorial" style="-fx-font-size: 20px;" />
+    <Label text="- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" style="-fx-font-size: 15px;" />
+    <Label text="Use the UP arrow key to move up of the plane." style="-fx-font-size: 15px;" />
+    <Label text="Use the DOWN arrow key to move down of the plane." style="-fx-font-size: 15px;" />
+    <Label text="Press SPACE key to fire a projectile." style="-fx-font-size: 15px;" />
+    <Label text="Kill 5 enemy planes to advance to Level 2." style="-fx-font-size: 15px;" />
+    <Label text="Kill boss plane in Level 2 to advance to Level 3. " style="-fx-font-size: 15px;" />
+    <Label text="Kill boss plane and avoid bomb in Level 3 to win game." style="-fx-font-size: 15px;" />
+</VBox>
