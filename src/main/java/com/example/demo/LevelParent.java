@@ -516,8 +516,12 @@ public abstract class LevelParent {
 	 * @param enemy the enemy unit to add
 	 */
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
-		enemyUnits.add(enemy);
-		root.getChildren().add(enemy);
+		if (!enemyUnits.contains(enemy)) {
+			enemyUnits.add(enemy);
+		}
+		if (!root.getChildren().contains(enemy)) {
+			root.getChildren().add(enemy);
+		}
 	}
 
 	/**

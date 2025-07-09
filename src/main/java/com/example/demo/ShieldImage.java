@@ -35,9 +35,11 @@ public class ShieldImage extends ImageView {
      * Shows the shield on the screen.
      */
     public void showShield() {
-        System.out.println("Shield is now visible.");
-        this.setVisible(true);
-        this.toFront();
+        if (!this.isVisible()) {
+            System.out.println("Shield is now visible.");
+            this.setVisible(true);
+            this.toFront();
+        }
     }
 
     /*

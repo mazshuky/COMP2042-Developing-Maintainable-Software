@@ -175,6 +175,8 @@ public class LevelThree extends LevelParent {
 
         bombMovementTimeline = new Timeline(new KeyFrame(Duration.millis(50), e -> moveBombs()));
         bombMovementTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        getUser().setBombTimeline(bombMovementTimeline);
     }
 
     /**

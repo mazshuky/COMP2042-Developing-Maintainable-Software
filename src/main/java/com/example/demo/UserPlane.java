@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.logging.Logger;
 import javafx.scene.media.AudioClip;
+import javafx.animation.Timeline;
 
 /**
  * Represents the user plane in the game. The UserPlane handles its own movement,
@@ -32,6 +33,8 @@ public class UserPlane extends FighterPlane {
 	private AudioClip gameOverSound;
 	private AudioClip youWinSound;
 	private AudioClip hitSound;
+
+	private Timeline bombTimeline;
 
 	/**
 	 * Constructs a UserPlane with specified initial health and heart display.
@@ -191,6 +194,13 @@ public class UserPlane extends FighterPlane {
 	public void handleGameOver() {
 			logger.info("Game over. Playing game over sound.");
 			playSound(gameOverSound);
+			if (bombTimeline != null) {
+				bombTimeline.stop();
+			}
+	}
+
+	public void setBombTimeline(Timeline bombTimeline) {
+		this.bombTimeline = bombTimeline;
 	}
 
 	/**
