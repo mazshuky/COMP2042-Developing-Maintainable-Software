@@ -1,10 +1,3 @@
-# GitHub
-Link: https://github.com/mazshuky/CW2024/tree/testing
-
-**Note:**
-The testing branch is the latest version of the project and should be used to run the application.
-Ensure you switch to this branch before following the steps to compile and run the application.
-
 # Compilation Instructions
 To compile the code and produce the application, ensure you have the following prerequisites:
 1. **Java Development Kit (JDK) 11 or higher installed on your system.**
