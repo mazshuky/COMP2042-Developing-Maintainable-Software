@@ -77,7 +77,9 @@ public class GameTutorial {
         Stage tutorialStage = new Stage();
         tutorialStage.initModality(Modality.APPLICATION_MODAL);
         tutorialStage.setTitle(WINDOW_TITLE);
-        tutorialStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        scene.getStylesheets().add(getClass().getResource("/com/example/demo/tutorial.css").toExternalForm());
+        tutorialStage.setScene(scene);
         setStageIcon(tutorialStage);
         tutorialStage.setOnCloseRequest(event -> controller.resumeGame());
         return tutorialStage;

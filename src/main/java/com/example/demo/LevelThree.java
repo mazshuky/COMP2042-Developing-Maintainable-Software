@@ -52,6 +52,7 @@ public class LevelThree extends LevelParent {
     protected void checkIfGameOver() {
         if (userIsDestroyed()) {
             loseGame();
+            stopBombElements();
         }
         else if (boss.isDestroyed()) {
             winGame();
